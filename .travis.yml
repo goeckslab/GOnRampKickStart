@@ -36,6 +36,9 @@ jobs:
         - BIOBLEND_GALAXY_URL="http://localhost:80"
 
 before_install:
+  - sudo apt-get update -y
+  - pip install -U pip
+  - pip --version
   - if [ "$TRAVIS_JOB" = "ansible-test" ]; then . ./travis_scripts/before_install_ansible.sh; fi
   - if [ "$TRAVIS_JOB" = "docker-build" ]; then . ./travis_scripts/before_install_docker.sh; fi
 
