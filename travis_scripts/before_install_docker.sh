@@ -25,7 +25,7 @@ export CID2=`docker run -d -p 8080:80 -p 8021:21 -p 8800:8800 \
   -e GALAXY_CONFIG_ALLOW_LIBRARY_PATH_PASTE=True \
   -e GALAXY_CONFIG_ENABLE_USER_DELETION=True \
   -e GALAXY_CONFIG_ENABLE_BETA_WORKFLOW_MODULES=True \
-  -v /tmp/:/tmp/ \
+  -v /tmp2/:/tmp/ \
   -v /export2/:/export \
   galaxy_kickstart`
 docker ps
