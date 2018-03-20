@@ -10,8 +10,12 @@
 - src: https://github.com/galaxyproject/ansible-galaxy.git
   name: galaxyprojectdotorg.galaxy
 
-- src: https://github.com/galaxyproject/ansible-galaxy-extras.git
+#- src: https://github.com/galaxyproject/ansible-galaxy-extras.git
+#  name: galaxyprojectdotorg.galaxy-extras
+
+- src: https://github.com/abretaud/ansible-galaxy-extras.git
   name: galaxyprojectdotorg.galaxy-extras
+  version: proxy_accel
 
 - src: https://github.com/galaxyproject/ansible-trackster.git
   name: galaxyprojectdotorg.trackster
