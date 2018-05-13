@@ -14,6 +14,7 @@ postgres_user_gid: 1550
 galaxy_server_dir: /home/{{ galaxy_user_name }}/{{ galaxy_user_name }}
 galaxy_venv_dir: "{{ galaxy_server_dir }}/.venv"
 galaxy_data: /home/{{ galaxy_user_name }}/{{ galaxy_user_name }}
+galaxy_config_style: "ini-paste"
 galaxy_config_dir: "{{ galaxy_server_dir }}/config"
 galaxy_database: /home/galaxy_database
 galaxy_db: postgresql://{{ galaxy_user_name }}:{{ galaxy_user_name }}@localhost:5432/galaxy?client_encoding=utf8
