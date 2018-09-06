@@ -1,1 +1,0 @@
-dockerfiles/galaxy-kickstart/Dockerfile
