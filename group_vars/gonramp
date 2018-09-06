@@ -1,0 +1,46 @@
+# create an administrative user
+galaxy_admin: gonramp@temporary.domain
+galaxy_admin_pw: admin
+galaxy_tools_admin_username: gonramp
+galaxy_tools_admin_user_preset_api_key: yes
+default_admin_api_key: 472d4f6e52616d7020415049204b6579
+
+galaxy_extras_slurm_ntask: "{{ ansible_processor_vcpus }}"
+
+configure_docker: no
+
+galaxy_changeset_id: release_18.05
+
+# disable supervisor webserver
+supervisor_webserver: False
+
+tool_dependency_dir: /home/{{ galaxy_user_name }}/tool_dependencies
+
+#proftp masquerade address for dynamic IPs
+proftpd_passive_port_high: 30100
+proftpd_nat_masquerade: True
+proftpd_masquerade_address: "`curl -4 -s icanhazip.com`"
+
+#change uwsgi port to avoid conflict with apollo's JMS usage on port 4001
+uwsgi_port: 40000
+
+paste_installer_port: 8888
+local_tool_dir_name: "local_tools"
+gonramp_tools_repo: https://github.com/goeckslab/galaxy-tools.git
+gonramp_apollo_tools: ['create_or_update_organism', 'delete_organism', 'apollo_user_manager']
+
+cyverse_tools_repo: https://github.com/goeckslab/cyverse-irods-tool.git
+cyverse_tool_name: cyverse-irods-tool
+
+openjdk8_version_string: 8u1*
+
+# these will be set as defined
+extra_env_variables:
+  handlers_and_web:
+    GALAXY_WEBAPOLLO_URL: http://127.0.0.1:8080/apollo
+    GALAXY_WEBAPOLLO_USER: "{{apollo_admin_user}}"
+    GALAXY_WEBAPOLLO_PASSWORD: "{{apollo_admin_pass}}"
+    GALAXY_WEBAPOLLO_EXT_URL: http://{{galaxy_ip_address}}:8080/apollo
+    GALAXY_SHARED_DIR: /home/{{ galaxy_user_name }}/shared_dir
+  just_handlers: {}
+  just_web: {}

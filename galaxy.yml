@@ -1,32 +1,67 @@
 - hosts: all
   become: yes
-  gather_facts: False
+  gather_facts: false
 
   environment: "{{ proxy_env }}"
 
   handlers:
-    - include_tasks: roles/handlers/galaxy.yml
+    - include: roles/handlers/galaxy.yml
+      static: yes
 
   pre_tasks:
-    - fail: msg="Installed ansible version {{ ansible_version.full }}, but ansible version >= 2.4 required"
-      when: ansible_version.full | version_compare('2.4.0.0', '<')
+    - fail: msg="Installed ansible version {{ ansible_version.full }}, but ansible version later than 2.1 required"
+      when: "{{ ansible_version.full | version_compare('2.1.0.0', '<') }}"
+      tags: always
+
+    - name: install python 2
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+      tags: always
+
+    - setup:
+      tags: always
+
+    - name: check local_usr
+      become: False
+      local_action: command whoami
+      register: whom
       tags:
         - always
 
-    - raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
-      tags:
-        - always
+      # this will get a platform- appropriate IP: VMs get the host-only address
+    - include: roles/gonramp/tasks/get_ip.yml
+      tags: always
 
-    - setup: # aka gather_facts
-      tags:
-        - always
+    - fail:
+        msg: "ERROR: {{ ansible_distribution }} {{ ansible_distribution_version }} is not supported"
+      when: (ansible_distribution != "Ubuntu") or
+            (ansible_distribution_version != "16.04" and ansible_distribution_version != "14.04")
+
+    - name: modify roles
+      become: yes
+      become_user: "{{ whom.stdout }}"
+      copy:
+        src: "{{playbook_dir}}/modified_roles/"
+        dest: "{{playbook_dir}}/roles"
+      delegate_to: localhost
+
+    - name: update apt
+      apt:
+        update_cache: yes
 
     - set_fact:
         banner_img: "{% if 'jetstream' in group_names %}jetstream_text.png{% else %}gce_text.png{% endif %}"
+      tags: always
 
   roles:
+    - role: openjdk
+      become: yes
+      become_user: root
+      tags:
+        - openjdk
 
     - role: galaxyprojectdotorg.galaxy-os
+      become: yes
+      become_user: root
       tags:
         - install_galaxy
         - install_packages
@@ -43,7 +78,6 @@
       postgresql_objects_users:
         - name: "{{ galaxy_user_name }}"
           password: "{{ galaxy_user_name }}"
-          encrypted: "yes"
       postgresql_objects_databases:
         - name: "{{ galaxy_user_name }}"
           owner: "{{ galaxy_user_name }}"
@@ -95,12 +129,20 @@
       become_user: "{{ galaxy_user_name }}"
       tags: install_tools
 
-    - role: run_data_manager_role
+    - role: gonramp
+      hosts: gonramp
+      tags: gonramp
+
+    - role: apollo
       tags:
-        - install_data_managers
-      when: gks_run_data_managers
+        - install_apollo
 
   post_tasks:
+    - name: configure JBrowse
+      include: roles/gonramp/tasks/jbrowse.yml
+      tags:
+        - config_jbrowse
+
     - name: Clean apt cache to recover some disk space
       shell: apt-get clean
 

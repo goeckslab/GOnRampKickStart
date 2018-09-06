@@ -1,0 +1,46 @@
+- name: Ensure galaxy_mutable_data_dir/tmp is owned by galaxy user
+  file: path="{{ galaxy_mutable_data_dir }}/tmp" state=directory owner={{ galaxy_user_name }} group={{ galaxy_user_gid }} recurse=yes
+
+- name: Check for persistent directory
+  stat: path={{ galaxy_persistent_directory }}
+  register: export_dir_exists
+
+- name: Check for persistent data
+  stat: path={{ galaxy_persistent_directory }}/exported_dirs.yml
+  register: export_exists
+
+- name: Check if galaxy config dir should be imported (no .original file)
+  stat: path="{{ galaxy_config_dir }}/.original"
+  register: original
+
+- include: import.yml
+  when: export_dir_exists.stat.exists and export_exists.stat.exists and not original.stat.exists
+
+- include: export.yml
+  when: export_dir_exists.stat.exists and not export_exists.stat.exists
+
+- name: Adjust proxy prefix in galaxy.ini
+  replace: dest={{ galaxy_config_dir }}/galaxy.ini regexp='(.*)prefix = (?!{{ nginx_galaxy_location }}).*' replace='\1prefix = {{ nginx_galaxy_location }}' backup=yes
+  tags: galaxy_config_files
+
+- name: Get host's external IP address
+  shell: curl --silent --fail http://icanhazip.com
+  register: host_external_ip
+
+- name: Adjust ftp_upload_site IP address in galaxy.ini
+  replace: dest={{ galaxy_config_dir }}/galaxy.ini regexp='\[server IP address\]' replace='{{ host_external_ip.stdout }}' backup=yes
+  tags: galaxy_config_files
+
+- name: Restart supervisor proftpd.
+  supervisorctl: name={{ item }} state=restarted
+  with_items:
+    - proftpd
+  ignore_errors: yes
+  tags: skip_supervisor_start_in_docker
+
+- name: Start nodejs proxy if installed
+  supervisorctl: name={{ item }} state=started
+  with_items:
+    - "galaxy:galaxy_nodejs_proxy"
+  when: supervisor_manage_ie_proxy
+  ignore_errors: yes

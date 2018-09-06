@@ -1,0 +1,9 @@
+[submodule "roles/apollo"]
+	path = roles/apollo
+	url = http://github.com/goeckslab/ansible-apollo
+[submodule "roles/gonramp"]
+	path = roles/gonramp
+	url = http://github.com/luke-c-sargent/ansible-gonramp-role
+[submodule "roles/openjdk"]
+	path = roles/openjdk
+	url = http://github.com/luke-c-sargent/ansible-gonramp-openjdk-role
