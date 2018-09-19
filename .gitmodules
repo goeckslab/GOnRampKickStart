@@ -6,3 +6,6 @@
 	path = roles/openjdk
 	url = http://github.com/luke-c-sargent/ansible-gonramp-openjdk-role
         branch = master
+[submodule "roles/gonramp"]
+	path = roles/gonramp
+	url = http://github.com/luke-c-sargent/ansible-gonramp-role
