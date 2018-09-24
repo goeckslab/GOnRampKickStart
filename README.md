@@ -25,6 +25,9 @@ List of included external roles:
 - [galaxy-tools role](https://github.com/ARTbio/ansible-galaxy-tools)
 
 #### G-OnRamp-specific roles ####
-- [gonramp role]()
-- [apollo-role]()
-- [openjdk-role]()
+- [gonramp role](https://github.com/goeckslab/GOnRampKickStart/tree/master/roles/gonramp)
+- [apollo-role](https://github.com/goeckslab/GOnRampKickStart/tree/master/roles/apollo)
+- [openjdk-role](https://github.com/goeckslab/GOnRampKickStart/tree/master/roles/openjdk)
+
+#### G-OnRamp Workflows ####
+- [G-OnRamp workflow list](https://github.com/goeckslab/GOnRampKickStart/tree/master/roles/gonramp/workflows)
