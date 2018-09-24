@@ -1,8 +1,10 @@
-[![Build Status](https://travis-ci.org/ARTbio/GalaxyKickStart.svg?branch=master)](https://travis-ci.org/ARTbio/GalaxyKickStart)
-
 # G-OnRamp Kick-Start
 
 G-OnRamp Kick-Start is a fork of  [GalaxyKickStart](https://github.com/ARTbio/GalaxyKickStart), "an [Ansible playbook](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html) designed to help you get one or more production-ready  [Galaxy](https://galaxyproject.org/) servers based on Ubuntu within minutes, and to maintain these servers".
+
+G-OnRamp generates genome browser hubs for visualization in either [JBrowse](https://jbrowse.org/) or the [UCSC genome browser](https://genome.ucsc.edu/).
+
+In addition, G-OnRamp is bundled with an [Apollo](http://genomearchitect.github.io/) instance for annotation of generated browser hubs.
 
 ### Required Ansible version >= 2.4
 
