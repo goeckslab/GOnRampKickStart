@@ -10,8 +10,8 @@ http {
     include       mime.types;
     default_type  application/octet-stream;
 
-    uwsgi_buffers 8 16384;
-    uwsgi_buffer_size 16384;
+    uwsgi_buffers 8 32k;
+    uwsgi_buffer_size 32k;
 
     sendfile        on;
 
