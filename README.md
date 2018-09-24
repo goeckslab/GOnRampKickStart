@@ -1,28 +1,19 @@
 [![Build Status](https://travis-ci.org/ARTbio/GalaxyKickStart.svg?branch=master)](https://travis-ci.org/ARTbio/GalaxyKickStart)
 
-# GalaxyKickStart
+# G-OnRamp Kick-Start
 
-GalaxyKickStart is an Ansible playbook designed to help you get one or more
-production-ready  [Galaxy servers](https://usegalaxy.org/) based on Ubuntu
-within minutes, and to maintain these servers.
-Optionally, instances can be pre-loaded with tools and workflows.
+G-OnRamp Kick-Start is a fork of  [GalaxyKickStart](https://github.com/ARTbio/GalaxyKickStart), "an [Ansible playbook](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html) designed to help you get one or more production-ready  [Galaxy](https://galaxyproject.org/) servers based on Ubuntu within minutes, and to maintain these servers".
 
-Detailed usage instructions are available in the
-[Documentation](https://artbio.github.io/GalaxyKickStart/).
+### Getting Started ###
+
 
 ### Required Ansible version >= 2.4
-
-The playbook has been tested on
-
-- Cloud Machines
-- Physical Servers
-- Docker
 
 GalaxyKickStart has been developed at the [ARTbio platform](http://artbio.fr)
 and contains roles developed by the [Galaxy
 team](https://github.com/galaxyproject/).
 
-List of roles included in this playbook
+List of included external roles:
 ------
 - [ensure_postrgesql_up](https://github.com/ARTbio/ensure_postgresql_up.git)
 - [natefoo-postgresql_objects](https://github.com/ARTbio/ansible-postgresql-objects)
@@ -33,9 +24,7 @@ List of roles included in this playbook
 - [galaxy-trackster role](https://github.com/galaxyproject/ansible-trackster)
 - [galaxy-tools role](https://github.com/ARTbio/ansible-galaxy-tools)
 
-
-# Troubleshooting
-### Installation of postgresql might fails due to non-standard locale ###
-If you are using Ubuntu on your Ansible machine, make sure that you deactivate
-`SendEnv LANG LC_*` in `/etc/ssh_config`. This will allow locale settings to
-be propagated by ssh.
+#### G-OnRamp-specific roles ####
+- [gonramp role]()
+- [apollo-role]()
+- [openjdk-role]()
