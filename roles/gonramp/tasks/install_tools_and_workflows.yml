@@ -1,0 +1,48 @@
+---
+- name: Copy workflows to remote temp directory
+  copy:
+    src: "{{role_path}}/workflows"
+    dest: "/tmp/gonramp/"
+
+- name: "Copy workflow script to remote temp directory"
+  copy:
+    src: "{{ role_path }}/scripts/install_workflows.py"
+    dest: "/tmp/gonramp/install_workflows.py"
+    mode: 0755
+
+- name: "Copy parsing script to remote temp directory"
+  copy:
+    src: "{{ role_path }}/scripts/tool_to_yaml.py"
+    dest: "/tmp/gonramp/tool_to_yaml.py"
+    mode: 0755
+
+- name: "Check for local tool addenda file's existence"
+  become: False
+  local_action: stat path={{ role_path }}/files/tool_addenda.yml
+  register: addenda_check
+
+- name: "Copy tool script to remote temp directory"
+  copy:
+    src: "{{ role_path }}/scripts/install_tool_yml.py"
+    dest: "/tmp/gonramp/install_tool_yml.py"
+    mode: 0755
+
+- name: "Copy tool addenda file to remote temp directory"
+  copy:
+    src: "{{ role_path }}/files/tool_addenda.yml"
+    dest: "/tmp/tool_addenda.yml"
+    mode: 0755
+  when: addenda_check.stat.islnk is defined
+
+- name: ensure that port {{ paste_installer_port }} is open, wait up to 60 sec
+  wait_for:
+    port: "{{paste_installer_port}}"
+    delay: 5
+    timeout: 60
+
+- name: "Install Tools and Workflows (WARNING: LENGTHY PROCESS!)"
+  command: "/tmp/gonramp/./install_workflows.py -a 127.0.0.1:{{ paste_installer_port | default('80') }} -k {{ default_admin_api_key }} -wd /tmp/gonramp/workflows -t"
+  async: 9000 # wait 2.5 hours, polling every 10 seconds, tho likely sooner
+
+- import_tasks: zombiecheck.yml
+  become: yes

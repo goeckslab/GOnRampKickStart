@@ -1,0 +1,59 @@
+---
+- name: create local tools directory
+  file: path={{galaxy_server_dir}}/tools/{{local_tool_dir_name}}/galaxy-tools state=directory
+
+- name: install tools to local directory
+  git:
+    repo: "{{gonramp_tools_repo}}"
+    refspec: gonramp
+    depth: 1
+    dest: "{{galaxy_server_dir}}/tools/{{local_tool_dir_name}}/galaxy-tools"
+
+- name: place templated environment variable file for Apollo tools
+  template:
+    src: environment_variables.xml.j2
+    dest: "{{galaxy_server_dir}}/tools/{{local_tool_dir_name}}/galaxy-tools/tools/apollo/environment_variables.xml"
+
+- name: register desired Apollo tools with galaxy
+  blockinfile:
+    path: "{{ galaxy_shed_tool_conf_file }}"
+    insertbefore: "</toolbox>"
+    marker: "<!-- ANSIBLE-MANAGED BLOCK: {{item}}  -->"
+    block: '
+      <section id="g-onramp_tools" name="G-OnRamp Tools" version="">
+        <tool file="{{galaxy_server_dir}}/tools/{{local_tool_dir_name}}/galaxy-tools/tools/apollo/{{item}}.xml" />
+      </section>'
+  with_items: "{{gonramp_apollo_tools}}"
+
+- name: install cyverse upload tool
+  git:
+    repo: "{{cyverse_tools_repo}}"
+    depth: 1
+    dest: "{{galaxy_server_dir}}/tools/{{local_tool_dir_name}}/{{cyverse_tool_name}}"
+
+- name: register cyverse upload tool
+  blockinfile:
+    path: "{{ galaxy_shed_tool_conf_file }}"
+    insertbefore: "</toolbox>"
+    marker: "<!-- ANSIBLE-MANAGED BLOCK: {{cyverse_tool_name}}  -->"
+    block: '
+      <section id="g-onramp_tools" name="G-OnRamp Tools" version="">
+        <tool file="{{galaxy_server_dir}}/tools/{{local_tool_dir_name}}/{{cyverse_tool_name}}/{{cyverse_tool_name}}.xml" />
+      </section>'
+
+- name: reload tool panel to register cyverse_irods_tool
+  uri:
+    url: http://{{ galaxy_ip_address }}/api/configuration/toolbox
+    method: PUT
+    body: "key={{ default_admin_api_key }}"
+  tags:
+    - api_update_tool_panel
+
+- name: install python-irodsclient via API call
+  uri:
+    url: http://{{ galaxy_ip_address }}/api/tools/cyverse_irods/dependencies
+    method: POST
+    body: "key={{ default_admin_api_key }}"
+    timeout: 180
+  tags:
+    - api_install_irods

@@ -1,0 +1,34 @@
+---
+- name: Ensure /lib/systemd/system/proftpd_script exists
+  file: path=/lib/systemd/system/proftpd_script state=directory
+
+- name: Copy service over
+  copy:
+    src: files/proftpd.service
+    dest: /lib/systemd/system/proftpd.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy configuration script
+  copy:
+    src: files/masquerade_addr.sh
+    dest: /lib/systemd/system/proftpd_script/masquerade_addr.sh
+    owner: root
+    group: root
+    mode: 0544
+
+- name: proftpd service enabling
+  systemd:
+    name: proftpd
+    enabled: yes
+
+- name: start service
+  systemd:
+    name: proftpd
+    state: started
+
+- name: restart supervisor proftpd
+  supervisorctl:
+    name: proftpd
+    state: restarted

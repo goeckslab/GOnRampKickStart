@@ -1,0 +1,8 @@
+---
+- name: Add paste server to galaxy initialization file
+  become: yes
+  become_user: "{{ galaxy_user_name }}"
+  blockinfile:
+    path: "{{ galaxy_config_file }}"
+    block: "[server: install]\nuse = egg:Paste#http\nport = {{ paste_installer_port }}\n"
+    insertbefore: BOF

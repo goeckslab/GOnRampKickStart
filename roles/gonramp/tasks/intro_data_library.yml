@@ -1,0 +1,12 @@
+---
+- name: "Copy data library files"
+  copy:
+    src: "{{role_path}}/files/intro_data"
+    dest: "/tmp/gonramp/"
+- name: Copy data library script
+  copy:
+    src: "{{role_path}}/scripts/install_intro_data.py"
+    dest: "/tmp/gonramp/install_intro_data.py"
+    mode: 0755
+- name: Execute data library install script
+  command: "/tmp/gonramp/./install_intro_data.py -a 127.0.0.1:{{ paste_installer_port | default('80') }} -k {{ default_admin_api_key }} -l /tmp/gonramp/intro_data"

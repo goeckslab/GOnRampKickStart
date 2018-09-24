@@ -1,0 +1,113 @@
+---
+- name: get external IP
+  include: get_ip.yml
+  when: galaxy_ip_address is not defined
+  tags:
+    - always
+
+- name: create Galaxy / Apollo shared directory
+  file: path="{{extra_env_variables.handlers_and_web.GALAXY_SHARED_DIR}}" state=directory
+  become: yes
+  become_user: "{{galaxy_user_name}}"
+  mode: 0774
+  tags:
+    - make_shared_directory
+
+- name: execute supervisor configuration
+  include: supervisor_envs.yml
+  tags:
+    - config_supervisor_envs
+
+- name: update pip
+  pip: name="pip" extra_args="--upgrade"
+
+- name: "Install setuptools"
+  pip: name="setuptools"
+
+- name: "Install BioBlend"
+  pip: name="bioblend"
+
+- include: install_tool_deps.yml
+  tags:
+    - install_external_tool_dependencies
+
+- include: add_paste_server.yml
+  tags:
+    - add_paste_server
+
+- include: start_paste_server.yml
+  tags:
+    - tools_and_workflows
+    - start_paste_server
+
+- include: intro_data_library.yml
+  when: (default_admin_api_key is defined)
+  tags:
+    - gonramp_data_library
+
+- name: ensure temporary directory '/tmp/gonramp' exists
+  file:
+    path: /tmp/gonramp
+    state: directory
+    mode: 0755
+  tags:
+    - tools_and_workflows
+    - temp_directory_check
+
+- name: check if there are tools and workflows to install
+  become: yes
+  become_user: "{{whom.stdout}}"
+  local_action: shell if ls {{role_path}}/workflows | grep -q .ga; then echo "yes"; else echo "no"; fi;
+  register: workflow_check
+  ignore_errors: yes
+  tags:
+    - tools_and_workflows
+    - workflows_check
+
+- include: install_tools_and_workflows.yml
+  when: (default_admin_api_key is defined) and (workflow_check.stdout == "yes")
+  tags:
+    - tools_and_workflows
+
+- include: install_local_tools.yml
+  become: yes
+  become_user: "{{galaxy_user_name}}"
+  tags:
+    - tools_and_workflows
+    - install_local_tools
+
+- include: install_conda_deps.yml
+  tags:
+    - tools_and_workflows
+    - install_local_tools
+    - install_conda_deps
+
+- include: stop_paste_server.yml
+  tags:
+    - tools_and_workflows
+    - stop_paste_server
+
+- include: glimmerhmm.yml
+  when: tool_dependency_dir and galaxy_config_default['app:main']['tool_data_table_config_path'] and galaxy_server_dir and (workflow_check.stdout == "yes")
+  tags:
+    - tools_and_workflows
+    - configure_glimmerhmm
+
+- include: proftpd_config.yml
+  when: nginx_conf_path and galaxy_user_name and galaxy_tool_dependency_dir
+  tags:
+    - configure_proftp
+
+- include: display_applications.yml
+  tags:
+    - display_applications
+
+- include: splash.yml
+  tags:
+    - splash_screen
+
+- name: restart all services
+  become: yes
+  shell: supervisorctl restart all
+  tags:
+    - supervisor_restart_all

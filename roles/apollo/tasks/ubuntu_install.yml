@@ -1,0 +1,30 @@
+---
+- name: create OS group for Apollo {{ apollo_os_user }} - {{ apollo_os_gid }}
+  group: name={{ apollo_os_user }} gid={{ apollo_os_gid }}  system=yes
+  become: yes
+  tags:
+    - configure_user
+    - create_apollo_group
+
+- name: create OS user for Apollo {{ apollo_os_user }} - {{ apollo_os_uid }}
+  user: name={{ apollo_os_user }} uid={{ apollo_os_uid }} shell=/bin/bash groups={{ apollo_os_user }}
+  become: yes
+  tags:
+    - configure_user
+    - create_apollo_system_user
+
+- include: ubuntu_dependencies.yml
+  tags:
+    - apollo_dependencies
+    - ubuntu
+
+- include: ubuntu_postgres.yml
+  tags:
+    - install_and_config_postgres
+    - ubuntu
+
+- include: apollo.yml
+  become: yes
+  become_user: "{{ apollo_os_user }}"
+  tags:
+    - install_and_config_apollo

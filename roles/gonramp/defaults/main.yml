@@ -1,0 +1,10 @@
+---
+# G-OnRamp-specific variable defaults
+#   *: all must be supplied, as no sensible assumptions can be made.
+#   *: best used in conjunction with GalaxyKickStart where these have defaults
+# galaxy_server_dir
+# galaxy_user_name
+# default_admin_api_key
+# galaxy_tool_dependency_dir
+# galaxy_config_default['app:main']['tool_data_table_config_path']
+# nginx_conf_path

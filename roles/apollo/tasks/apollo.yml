@@ -1,0 +1,110 @@
+---
+- name: get JAVA_HOME
+  shell: echo `readlink -f $(type -p javac) | sed 's|/bin/javac||'`
+  args:
+   executable: /bin/bash
+  register: java_home
+  when:
+    - ansible_env is defined and ansible_env.JAVA_HOME is undefined
+    - java_home is undefined
+  tags:
+   - apollo_get_java_home
+
+- name: set JAVA_HOME in /etc/environment if not present
+  become: yes
+  become_user: root
+  lineinfile: dest=/etc/environment state=present regexp='^JAVA_HOME' line='JAVA_HOME={{ java_home.stdout }}'
+  when:
+    - java_home is defined
+    - java_home.stdout is defined
+  tags:
+    - set_java_home
+
+- name: re-gather facts
+  setup:
+
+- name: acquire apollo from github version {{ apollo_version }}
+  become: yes
+  become_user: root
+  git:
+    repo: https://github.com/gmod/Apollo.git
+    dest: "{{apollo_install_location}}/"
+    version: "{{apollo_version}}"
+    force: yes
+  tags:
+    - get_apollo_github
+
+- name: correct apollo permissions
+  become: yes
+  become_user: root
+  file:
+    path: "{{apollo_install_location}}/"
+    state: directory
+    recurse: yes
+    owner: "{{apollo_os_user}}"
+    group: users
+    mode: "{{apollo_permission_octal}}"
+  tags:
+    - fix_apollo_permissions
+
+- name: generate apollo-config files from template
+  template:
+    src: 'apollo-config.groovy.j2'
+    dest: '{{ apollo_install_location }}/apollo-config.groovy'
+  tags:
+    - apollo_config_templating
+
+- name: create bin directory for setenv.sh
+  become: yes
+  become_user: root
+  file:
+    path: /var/lib/{{apt_tomcat_version}}/bin
+    state: directory
+  tags:
+    - tomcat_create_bin_directory
+
+- name: set CATALINA_OPTS
+  become: yes
+  become_user: root
+  template:
+    src: 'setenv.sh.j2'
+    dest: /var/lib/{{apt_tomcat_version}}/bin/setenv.sh
+  tags:
+    - tomcat_create_set_env
+
+- name: create WAR by running 'apollo deploy'
+  become: yes
+  become_user: "{{apollo_os_user}}"
+  shell: ./apollo deploy
+  args:
+    chdir: "{{apollo_install_location}}"
+    executable: "/bin/bash"
+  register: apollo_deploy_output
+  tags:
+    - apollo_create_war
+
+- name: set extracted file variable
+  set_fact:
+    apollo_file: "{{ apollo_deploy_output.stdout | regex_replace('^[\\s\\S]*Done creating WAR target/') | regex_replace('\n[\\s\\S]*') | regex_search('^(?!Grails not found using grailsw)[\\s\\S]*$') }}"
+  tags:
+    - apollo_create_war
+
+- name: move apollo .war file to new directory
+  become: yes
+  become_user: root
+  copy:
+    src: "{{apollo_install_location}}/target/{{ apollo_file }}"
+    dest: /var/lib/{{ apt_tomcat_version }}/webapps/apollo.war
+    remote_src: yes
+  tags:
+    - apollo_move_war
+
+- name: restart tomcat service
+  become: yes
+  become_user: root
+  service:
+    name: "{{ apt_tomcat_version }}"
+    state: restarted
+    sleep: 10
+  tags:
+    - apollo_restart_tomcat

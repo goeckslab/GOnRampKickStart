@@ -1,0 +1,10 @@
+---
+- name: "Copy dependency script to remote temp directory"
+  copy:
+    src: "{{ role_path }}/scripts/install_dependencies.py"
+    dest: "/tmp/gonramp/install_dependencies.py"
+    mode: 0755
+
+- name: "Install any missed tool dependencies via conda"
+  command: "/tmp/gonramp/./install_dependencies.py -a 127.0.0.1 -k {{ default_admin_api_key }}"
+  async: 3600 # wait 60 minutes, tho likely much sooner

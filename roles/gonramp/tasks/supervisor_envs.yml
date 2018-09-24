@@ -1,0 +1,27 @@
+---
+- name: add environment variables to supervisor galaxy_web
+  lineinfile:
+    path: "{{ supervisor_conf_path }}"
+    backrefs: yes
+    state: present
+    regexp: '^(environment.*)$'
+    line: 'environment     = VIRTUAL_ENV="{{galaxy_venv_dir}}/",PATH="{{galaxy_venv_dir}}/bin:%(ENV_PATH)s",GALAXY_WEBAPOLLO_URL="{{extra_env_variables.handlers_and_web.GALAXY_WEBAPOLLO_URL}}",GALAXY_WEBAPOLLO_USER="{{extra_env_variables.handlers_and_web.GALAXY_WEBAPOLLO_USER}}",GALAXY_WEBAPOLLO_PASSWORD="{{extra_env_variables.handlers_and_web.GALAXY_WEBAPOLLO_PASSWORD}}",GALAXY_SHARED_DIR="{{extra_env_variables.handlers_and_web.GALAXY_SHARED_DIR}}"\nredirect_stderr = true\nstdout_logfile  = {{ galaxy_log_dir }}/galaxy_web.log'
+  tags:
+    - galaxy_apollo_env_vars_web
+
+- name: add environment variables to supervisor handler
+  lineinfile:
+    path: "{{ supervisor_conf_path }}"
+    state: present
+    backrefs: yes
+    regexp: '(^\[program:handler]$)'
+    line: '\1\nenvironment     = VIRTUAL_ENV="{{galaxy_venv_dir}}/",PATH="{{galaxy_venv_dir}}/bin:%(ENV_PATH)s",GALAXY_WEBAPOLLO_URL="{{extra_env_variables.handlers_and_web.GALAXY_WEBAPOLLO_URL}}",GALAXY_WEBAPOLLO_USER="{{extra_env_variables.handlers_and_web.GALAXY_WEBAPOLLO_USER}}",GALAXY_WEBAPOLLO_PASSWORD="{{extra_env_variables.handlers_and_web.GALAXY_WEBAPOLLO_PASSWORD}}",GALAXY_SHARED_DIR="{{extra_env_variables.handlers_and_web.GALAXY_SHARED_DIR}}"\nredirect_stderr = true\nstdout_logfile  = {{ galaxy_log_dir }}/handler%(process_num)s.log'
+  tags:
+    - galaxy_apollo_env_vars_handler
+
+- name: update and restart supervisor
+  supervisorctl:
+    name: "galaxy:"
+    state: restarted
+  tags:
+    - post_config_supervisor_restart

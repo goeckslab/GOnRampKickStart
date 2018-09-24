@@ -1,0 +1,32 @@
+- name: get openjdk-8
+  apt:
+    name: openjdk-8-jdk={{openjdk8_version_string}}
+  tags:
+    - ubuntu1604
+
+# http://genomearchitect.readthedocs.io/en/latest/Setup.html?highlight=RFC#json-in-the-url-with-newer-versions-of-tomcat
+- name: get tomcat 8 (version 8.0.32)
+  apt:
+    name: tomcat8=8.0.32*
+  tags:
+    - ubuntu1604
+
+- name: get JAVA_HOME
+  shell: readlink -f $(type -p javac) | sed 's|/bin/javac||'
+  args:
+   executable: /bin/bash
+  register: java_home
+  tags:
+   - ubuntu1604
+   - java_home
+   - get_java_home
+
+- name: set JAVA_HOME
+  lineinfile: dest=/etc/environment state=present regexp='^JAVA_HOME' line='JAVA_HOME={{ java_home.stdout }}'
+  environment:
+    JAVA_HOME : "{{ java_home.stdout }}"
+  become: yes
+  tags:
+   - ubuntu1604
+   - java_home
+   - set_java_home

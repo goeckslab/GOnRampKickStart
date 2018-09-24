@@ -1,0 +1,72 @@
+- name: add 14.04 openjdk-8 ppa
+  become: yes
+  apt_repository:
+    repo: 'ppa:openjdk-r/ppa'
+
+- name: install openjdk (Ubuntu 14.04)
+  become: yes
+  apt:
+    name: openjdk-8-jdk=8u141*
+    update_cache: yes
+    install_recommends: yes
+    cache_valid_time: 3600
+  tags:
+    - ubuntu1404
+    - install_deps
+
+- name: get tomcat7 (version 7.0.52)
+  apt:
+    name: tomcat7=7.0.52*
+  tags:
+    - ubuntu1404
+
+- name: get JAVA_HOME
+  shell: readlink -f $(type -p javac) | sed 's|/bin/javac||'
+  args:
+   executable: /bin/bash
+  register: java_home
+  tags:
+    - ubuntu1404
+    - java_home
+    - get_java_home
+
+- name: set JAVA_HOME
+  lineinfile: dest=/etc/environment state=present regexp='^JAVA_HOME' line='JAVA_HOME={{ java_home.stdout }}'
+  environment:
+    JAVA_HOME : "{{ java_home.stdout }}"
+  become: yes
+  tags:
+    - ubuntu1404
+    - java_home
+    - set_java_home
+
+- name: copy sudoer file to tmp
+  become: yes
+  become_user: root
+  command: cp -f /etc/sudoers /etc/sudoers.tmp
+  tags:
+    - ubuntu1404
+    - java_visudo
+
+- name: set visudo to not ignore java_home
+  lineinfile: dest=/etc/sudoers.tmp state=present regexp='^Defaults	env_keep \+= "JAVA_HOME"$' line='Defaults	env_keep += "JAVA_HOME"'
+  become: yes
+  become_user: root
+  tags:
+    - ubuntu1404
+    -  java_visudo
+
+- name: check with visudo
+  become: yes
+  become_user: root
+  shell: visudo -q -c -f /etc/sudoers.tmp && cp -f /etc/sudoers.tmp /etc/sudoers
+  tags:
+    - ubuntu1404
+    -  java_visudo
+
+- name: correct ca-certs from openjdk-8 on 14.04
+  become: yes
+  shell: update-ca-certificates -f
+  tags:
+    - ubuntu1404
+    - correct_ca_certs

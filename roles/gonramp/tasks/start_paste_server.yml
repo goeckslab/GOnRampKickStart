@@ -1,0 +1,36 @@
+---
+- name: Remove old pid file if it exists
+  become: yes
+  become_user: "{{ galaxy_user_name }}"
+  file:
+    state: absent
+    path: "{{ galaxy_data }}/paste_installer.pid"
+
+- name: Launch Paste Server
+  become: yes
+  become_user: "{{ galaxy_user_name }}"
+  shell: nohup bash run.sh  --server-name="install" --pid-file="paste_installer.pid" --log-file="paste_installer.log" </dev/null >/dev/null 2>&1 &
+  args:
+    chdir: "{{ galaxy_data }}/"
+  ignore_errors: no
+  tags:
+    - launch_paste
+
+- name: Check if the paste_installer.pid file was created...
+  stat:
+    path: "{{ galaxy_data }}/paste_installer.pid"
+  register: pastey
+
+- name: ... and fail if it wasnt!
+  fail: msg="paste_installer.pid not found"
+  when: pastey.stat.exists == "false"
+
+- name: wait until the paste server is responsive
+  become: yes
+  become_user: root
+  wait_for:
+    port: "{{paste_installer_port}}"
+    delay: 20
+    timeout: 600
+  tags:
+    - wait_paste

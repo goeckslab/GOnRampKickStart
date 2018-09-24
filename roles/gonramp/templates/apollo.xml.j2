@@ -1,0 +1,6 @@
+<display id="jbrowsehub" version="1.0.0" name="display JBrowse Hub at Apollo">
+  <link id="apollo" name="Display with Apollo">
+    <url>http://{{galaxy_ip_address}}:8080/apollo/index.html?data=${qp($hub_file.url + '/myHub/json')}</url>
+    <param type="data" name="hub_file" url="${DATASET_HASH}" allow_extra_files_access="True" />
+  </link>
+</display>

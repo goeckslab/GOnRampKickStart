@@ -1,0 +1,10 @@
+---
+- name: create JBrowse display application directory
+  file: path={{galaxy_server_dir}}/display_applications/jbrowse state=directory
+
+- name: place templated jbrowsehub.xml
+  template:
+    src: 'jbrowsehub.xml.j2'
+    dest: "{{galaxy_server_dir}}/display_applications/jbrowse/jbrowsehub.xml"
+  when:
+   - galaxy_ip_address is defined

@@ -1,0 +1,14 @@
+---
+- name: get PID
+  shell: cat {{ galaxy_data }}/paste_installer.pid
+  register: installer_pid
+
+- name: kill installer server process
+  shell: kill -9 {{ installer_pid.stdout }}
+
+- name: Remove old pid file if it exists
+  become: yes
+  become_user: "{{ galaxy_user_name }}"
+  file:
+    state: absent
+    path: "{{ galaxy_data }}/paste_installer.pid"

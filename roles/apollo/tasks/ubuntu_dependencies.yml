@@ -1,0 +1,59 @@
+---
+- name: install dependencies (Ubuntu)
+  become: yes
+  apt: name={{item}} update_cache=yes install_recommends=yes cache_valid_time=3600
+  with_items:
+    - zlib1g-dev
+    - libpng-dev
+    - libgd2-noxpm-dev
+    - build-essential
+    - git
+    - python-software-properties
+    - libssl-dev
+    - curl
+    - ant
+    - unzip
+  tags:
+    - ubuntu
+    - install_deps
+
+- name: modify /etc/init.d/tomcat7
+  replace: path=/etc/init.d/tomcat7 regexp='/usr/lib/jvm/java-6-openjdk' replace='/usr/lib/jvm/java-8-openjdk'
+  become: yes
+  become_user: root
+  when: ansible_distribution_version == "14.04" and apt_tomcat_version == "tomcat7"
+  tags:
+    -  tomcat7_fix
+
+- name: get node repo installs script
+  get_url: url=http://deb.nodesource.com/setup_{{ node_version | default('8.x')}} dest=/tmp/install.sh validate_certs=False
+  tags:
+    - ubuntu
+    - node
+    - get_node_script
+
+- name: execute fetched script
+  become: yes
+  shell: bash install.sh chdir=/tmp executable=/bin/bash
+  tags:
+    - ubuntu
+    - node
+    - execute_node_script
+
+- name: remove fetched script
+  file:
+    path: /tmp/install.sh
+    state: absent
+  tags:
+    - node
+
+- name: upgrade node
+  apt:
+    name: nodejs
+    state: latest
+    only_upgrade: yes
+  tags:
+    - node
+    - ubuntu
+    - node_up
+  register: local_node_upgrade

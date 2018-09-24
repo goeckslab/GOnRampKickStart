@@ -1,0 +1,13 @@
+---
+- name: re-setup for apollo
+  setup:
+- name: set tomcat version to 7 for ubuntu 14.04
+  set_fact:
+    apt_tomcat_version: "tomcat7"
+  when: ansible_os_family == "Debian" and ansible_distribution == "Ubuntu" and ansible_distribution_version == "14.04"
+  tags: always
+- include: ubuntu_install.yml
+  when: ansible_os_family == "Debian" and ansible_distribution == "Ubuntu"
+  tags:
+    - apollo_dependencies
+    - ubuntu

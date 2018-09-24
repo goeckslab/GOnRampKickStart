@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<macros>
+    <xml name="environment_variables">
+        <environment_variables>
+            <environment_variable name="GALAXY_WEBAPOLLO_URL">http://127.0.0.1:8080/apollo</environment_variable>
+            <environment_variable name="GALAXY_WEBAPOLLO_USER">{{apollo_admin_user}}</environment_variable>
+            <environment_variable name="GALAXY_WEBAPOLLO_PASSWORD">{{apollo_admin_pass}}</environment_variable>
+            <environment_variable name="GALAXY_WEBAPOLLO_EXT_URL=">http://{{galaxy_ip_address}}:8080/apollo</environment_variable>
+            <environment_variable name="GALAXY_SHARED_DIR">/home/{{galaxy_user_name}}/shared_dir</environment_variable>
+        </environment_variables>
+    </xml>
+</macros>

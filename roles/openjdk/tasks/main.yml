@@ -1,0 +1,13 @@
+- name: perform Ubuntu 14.04 installation
+  include: ubuntu1404.yml
+  when:
+    - ansible_distribution_version == "14.04"
+  tags:
+    - ubuntu1404
+
+- name: perform Ubuntu 16.04 installation
+  include: ubuntu1604.yml
+  when:
+    - ansible_distribution_version == "16.04"
+  tags:
+    - ubuntu1604

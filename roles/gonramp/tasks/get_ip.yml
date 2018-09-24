@@ -1,0 +1,33 @@
+---
+- name: check interfaces file for hard-coded IP
+  shell: "cat /etc/network/interfaces | grep -v \"#\" | grep address | cut -d' ' -f2-"
+  args:
+    executable: /bin/bash
+  register: interfaces_ip
+
+- name: get IP address of server
+  command: "curl icanhazip.com"
+  register: server_ip
+  when: server_ip is not defined
+
+- name: use interfaces ip if it's set or equal to external IP
+  set_fact:
+    galaxy_ip_address: "{{interfaces_ip.stdout}}"
+  when: (interfaces_ip is defined) and
+        (interfaces_ip.stdout is defined) and
+        (interfaces_ip.stdout != "") or
+        (interfaces_ip.stdout == server_ip.stdout)
+
+- name: ...otherwise, use remote ip check value
+  set_fact:
+    galaxy_ip_address: "{{server_ip.stdout}}"
+  when:
+    - galaxy_ip_address is not defined
+    - server_ip is defined
+    - server_ip.stdout is defined
+
+- name: then make sure proftp can use this value
+  set_fact:
+    proftpd_masquerade_address: "{{galaxy_ip_address}}"
+  when:
+    - proftpd_masquerade_address != galaxy_ip_address

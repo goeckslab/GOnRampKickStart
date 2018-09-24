@@ -1,0 +1,51 @@
+---
+- name: install postgresql and module dependencies
+  become: yes
+  apt: name={{item}} update_cache=yes install_recommends=yes cache_valid_time=3600
+  with_items:
+    - postgresql
+    - libpq-dev
+    - python-psycopg2
+  tags:
+    - ubuntu_install_postgres_and_dependencies
+
+- name: create user for apollo
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    name: "{{ postgres_user }}"
+    password: "{{ postgres_user_password }}"
+    encrypted: true
+    role_attr_flags: NOSUPERUSER,NOINHERIT,LOGIN,NOCREATEROLE
+  tags:
+  - ubuntu_postgres_create_user
+
+- name: create 'apollo' database
+  become: yes
+  become_user: postgres
+  postgresql_db:
+    name: apollo
+    owner: "{{ postgres_user }}"
+    encoding: UTF-8
+  tags:
+  - ubuntu_postgres_create_apollo_db
+
+- name: create 'apollo-production' database
+  become: yes
+  become_user: postgres
+  postgresql_db:
+    name: apollo-production
+    owner: "{{ postgres_user }}"
+    encoding: UTF-8
+  tags:
+  - ubuntu_postgres_create_production_db
+
+- name: create 'apollo-test' database
+  become: yes
+  become_user: postgres
+  postgresql_db:
+    name: apollo-test
+    owner: "{{ postgres_user }}"
+    encoding: UTF-8
+  tags:
+  - ubuntu_postgres_create_test_db
