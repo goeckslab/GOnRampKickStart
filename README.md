@@ -4,14 +4,38 @@
 
 G-OnRamp Kick-Start is a fork of  [GalaxyKickStart](https://github.com/ARTbio/GalaxyKickStart), "an [Ansible playbook](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html) designed to help you get one or more production-ready  [Galaxy](https://galaxyproject.org/) servers based on Ubuntu within minutes, and to maintain these servers".
 
-### Getting Started ###
-
-
 ### Required Ansible version >= 2.4
 
 GalaxyKickStart has been developed at the [ARTbio platform](http://artbio.fr)
 and contains roles developed by the [Galaxy
 team](https://github.com/galaxyproject/).
+
+### Getting Started ###
+To kick-start G-OnRamp:
+- Clone this repository, then navigate to it:
+```
+$ git clone https://github.com/goeckslab/GOnRampKickStart/
+cd GOnRampKickStart
+```
+- run the initialization script to download / modify the roles:
+```
+$ ./init.sh
+```
+  - _this downloads required roles and applies any necessary patches_
+
+
+- edit (_e.g._, with `vim`) your inventory file to point to valid target(s):
+```
+$ vim inventory_files/gonramp_inventory
+```
+- run the playbook `gonramp.yml` with ansible
+```
+$ ansible-playbook -i inventory_files/gonramp_inventory gonramp.yml
+```
+  - _verbose output can be specified with 1-4 v flags for increasing verbosity_
+    - _e.g._ `-v`, `-vv`, `-vvv`, `-vvvv`
+
+
 
 List of included external roles:
 ------
