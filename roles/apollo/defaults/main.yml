@@ -3,9 +3,9 @@
 apollo_os_user: "apollo_sys"
 apollo_os_gid: 1337
 apollo_os_uid: "{{ apollo_os_gid }}"
-apollo_version: "jbrowse-1.15"
+apollo_version: "c0bdc58ba5b697a23c1bc059253bb9b7e1c91c4d"
 
-jbrowse_tag: "1.15.3-release"
+jbrowse_tag: "1.12.5-release"
 
 # apollo admin user information
 apollo_admin_user: "{{galaxy_admin | default('apollo_admin')}}"
