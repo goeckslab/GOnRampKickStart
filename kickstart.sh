@@ -12,7 +12,7 @@ TRANSPORT_CFG_LINE="transport = paramiko"
 WORKFLOWS=https://github.com/goeckslab/G-OnRamp-workflows/archive/master.zip
 EXTRACT_DIR=G-OnRamp-workflows-master
 
-GKS_SHA_PIN=32aac5c1a4b5b9c180608248e556c9781d4f9b1e #fc5050fd0665f16526e802a4aca207daa6a68b5b
+GKS_SHA_PIN=e7dd64b6bc35400fa41e2dec18a68c55d0beb128 #fc5050fd0665f16526e802a4aca207daa6a68b5b
 SHALLOW_SINCE=2018-09-01
 
 SHALLOW="--shallow-since=$SHALLOW_SINCE"
