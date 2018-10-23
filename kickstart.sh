@@ -101,7 +101,6 @@ then
     rm -rf temporino
 
     mv gonramp_vars group_vars/gonramp
-    mv gonramp roles
 
     ansible-galaxy install -r requirements_roles.yml -p roles
     # acquire apollo role
