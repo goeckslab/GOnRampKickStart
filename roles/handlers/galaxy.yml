@@ -1,5 +1,0 @@
-- name: start galaxy
-  supervisorctl: name='galaxy:' state=started
-
-- name: restart galaxy
-  supervisorctl: name='galaxy:' state=restarted
