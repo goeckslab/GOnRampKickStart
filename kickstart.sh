@@ -90,7 +90,8 @@ then
     echo $TRANSPORT_CFG_LINE >> ansible.cfg
     cd .. || exit
     rm -f temporino/galaxy.yml
-
+    rm -f temporino/.git
+    
     # acquire workflows
     wget $WORKFLOWS
     unzip master.zip
