@@ -71,12 +71,9 @@ if ansible --version | grep --quiet -E 'ansible 2.2.|ansible 2.1.|ansible 2.3.|a
 then
   echo "$PFX Ansible found, acquiring GalaxyKickStart.."
 
-  # remove the git file -- let's not accidentally push the post install state
-  if [ -d "./.git" ]; then
-    rm -rf ./.git
-  fi
 
-  if [ ! -d "./roles/gonramp" ]; then
+
+  if [ ! -d "./roles/galaxy.movedata" ]; then
 
     # acquire GKS
       # this requires a somewhat newer version of git
