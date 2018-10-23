@@ -12,7 +12,7 @@ roles/*
 
 
 # and some directories are good
-!modified_roles/
+!modified_roles/*
 !roles/gonramp
 !roles/apollo
 !roles/openjdk
