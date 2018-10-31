@@ -9,7 +9,7 @@ roles/*
 !gonramp.yml
 !gonramp_vars
 !kickstart.sh
-
+!LICENSE
 
 # and some directories are good
 !modified_roles/*
