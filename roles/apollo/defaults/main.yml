@@ -5,7 +5,7 @@ apollo_os_gid: 1337
 apollo_os_uid: "{{ apollo_os_gid }}"
 apollo_version: "jbrowse-1.15"
 
-jbrowse_tag: "1.15.3-release"
+jbrowse_tag: "1.15.4-release"
 jbrowse_source: "https://github.com/GMOD/jbrowse"
 
 # apollo admin user information
