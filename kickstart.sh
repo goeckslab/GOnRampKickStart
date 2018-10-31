@@ -95,8 +95,8 @@ then
     
     # acquire workflows
     mkdir -p gonramp/workflows
-    git clone $WORKFLOWS --depth 1 gonramp/workflows
-    rm -rf gonramp/workflows/LICENSE
+    git clone $WORKFLOWS --depth 1 roles/gonramp/workflows
+    rm -rf roles/gonramp/workflows/LICENSE
 
     cp -R ./temporino/ .
     rm -rf temporino
