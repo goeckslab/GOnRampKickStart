@@ -16,3 +16,6 @@ roles/*
 !roles/gonramp
 !roles/apollo
 !roles/openjdk
+
+# but some subdirectories are not!
+roles/gonramp/workflows/*
