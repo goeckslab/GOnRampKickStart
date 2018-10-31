@@ -9,7 +9,7 @@ PFX="[G-OnRamp]"
 
 TRANSPORT_CFG_LINE="transport = paramiko"
 
-WORKFLOWS=https://github.com/goeckslab/G-OnRamp-workflows/archive/master.zip
+WORKFLOWS=https://github.com/goeckslab/G-OnRamp-workflows
 EXTRACT_DIR=G-OnRamp-workflows-master
 
 GKS_SHA_PIN=e7dd64b6bc35400fa41e2dec18a68c55d0beb128 #fc5050fd0665f16526e802a4aca207daa6a68b5b
@@ -76,10 +76,11 @@ then
   if [ ! -d "./roles/galaxy.movedata" ]; then
 
     # acquire GKS
-      # this requires a somewhat newer version of git
+      # this requires a somewhat newer version of git (2.11+)
     git clone $SHALLOW https://github.com/ARTbio/GalaxyKickStart.git temporino
     cd temporino || exit
     git reset --hard $GKS_SHA_PIN
+
     # append line to ansible.cfg to force paramiko if sshpass absent
     if sshpass -V 1>/dev/null 2>&1
     then
@@ -93,10 +94,9 @@ then
     rm -f temporino/.git
     
     # acquire workflows
-    wget $WORKFLOWS
-    unzip master.zip
     mkdir -p gonramp/workflows
-    mv $EXTRACT_DIR/* gonramp/workflows
+    git clone $WORKFLOWS --depth 1 gonramp/workflows
+    rm -rf gonramp/workflows/LICENSE
 
     cp -R ./temporino/ .
     rm -rf temporino
