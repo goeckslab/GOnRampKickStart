@@ -21,7 +21,7 @@
       tags: always
 
     - name: generate new API key
-      shell: (export LC_ALL=C ; cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 32 | head -n 1)
+      raw: "export LC_ALL=C ; cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 32 | head -n 1"
       register: new_api_key
       when: generate_api_key
       tags:
@@ -30,7 +30,7 @@
 
     - name: switch API keys
       set_fact:
-        default_admin_api_key: "{{ new_api_key.stdout }}"
+        default_admin_api_key: "{{ new_api_key.stdout | trim }}"
       when: generate_api_key
       tags:
         - always
