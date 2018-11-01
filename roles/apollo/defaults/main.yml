@@ -10,7 +10,7 @@ jbrowse_source: "https://github.com/GMOD/jbrowse"
 
 # apollo admin user information
 apollo_admin_user: "{{galaxy_admin | default('apollo_admin')}}"
-apollo_admin_pass: "admin_pass"         # change me!
+apollo_admin_pass: "!?admin_pass!?"         # change me!
 apollo_admin_fname: "admin"
 apollo_admin_lname: "admin"
 

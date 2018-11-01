@@ -1,9 +1,10 @@
 # create an administrative user
-galaxy_admin: gonramp@temporary.domain
-galaxy_admin_pw: admin
+galaxy_admin: admin@g-onramp.org
+galaxy_admin_pw: "!?admin?!"
 galaxy_tools_admin_username: gonramp
 galaxy_tools_admin_user_preset_api_key: yes
 default_admin_api_key: 472d4f6e52616d7020415049204b6579
+generate_api_key: True
 
 galaxy_extras_slurm_ntask: "{{ ansible_processor_vcpus }}"
 
