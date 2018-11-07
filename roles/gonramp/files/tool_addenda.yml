@@ -9,3 +9,21 @@ tools:
   - 72ccb2f848a0
   tool_panel_section_label: G-OnRamp Tools
   tool_shed_url: https://toolshed.g2.bx.psu.edu/view/yating-l/rename_tracks/72ccb2f848a0
+- name: trimmomatic
+  owner: pjbriggs
+  revisions:
+  - 59054f086eca
+  tool_panel_section_label:G-OnRamp Tools
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/view/pjbriggs/trimmomatic/59054f086eca
+- name: fastqc
+  owner: devteam
+  revisions:
+  - 3e1cdf5406db
+  tool_panel_section_label: G-OnRamp Tools
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/view/devteam/fastqc/3e1cdf5406db
+  - name: samtool_filter2
+    owner: devteam
+    revisions:
+    - 56c31114ad4a
+    tool_panel_section_label: G-OnRamp Tools
+    tool_shed_url: https://toolshed.g2.bx.psu.edu/view/devteam/samtool_filter2/56c31114ad4a
