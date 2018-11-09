@@ -13,6 +13,6 @@
     dest: "/tmp/gonramp/install_intro_data.py"
     mode: 0755
 - name: Execute intro data library install script
-  command: "/tmp/gonramp/./install_intro_data.py -a 127.0.0.1:{{ paste_installer_port | default('80') }} -k {{ default_admin_api_key }} -l /tmp/gonramp/intro_data" -n "Intro to G-OnRamp" -d "Sample data sets for G-OnRamp's introductory walk-through"
+  command: "/tmp/gonramp/./install_intro_data.py -a 127.0.0.1:{{ paste_installer_port | default('80') }} -k {{ default_admin_api_key }} -l /tmp/gonramp/intro_data -n \"Intro to G-OnRamp\" -d \"Sample data sets for G-OnRamp's introductory walk-through\""
 - name: Execute RNA-Seq data library install script
-  command: "/tmp/gonramp/./install_intro_data.py -a 127.0.0.1:{{ paste_installer_port | default('80') }} -k {{ default_admin_api_key }} -l /tmp/gonramp/RNA-Seq_reads" -n "RNA-Seq reads" -d "Data for 'Using Galaxy to analyze RNA-Seq' walkthrough"
+  command: "/tmp/gonramp/./install_intro_data.py -a 127.0.0.1:{{ paste_installer_port | default('80') }} -k {{ default_admin_api_key }} -l /tmp/gonramp/RNA-Seq_reads -n \"RNA-Seq reads\" -d \"Data for 'Using Galaxy to analyze RNA-Seq' walkthrough\""
