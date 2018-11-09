@@ -15,6 +15,7 @@ roles/*
 !modified_roles/*
 !roles/gonramp
 !roles/gonramp/files
+!roles/gonramp/files/*
 !roles/apollo
 !roles/openjdk
 
