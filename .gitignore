@@ -1,5 +1,7 @@
 # everything's bad
 /*
+# especially
+.DS_Store
 
 # but some things aren't bad
 !.gitignore
