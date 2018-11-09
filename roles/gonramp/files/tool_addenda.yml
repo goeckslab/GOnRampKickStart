@@ -13,7 +13,7 @@ tools:
   owner: pjbriggs
   revisions:
   - 59054f086eca
-  tool_panel_section_label:G-OnRamp Tools
+  tool_panel_section_label: G-OnRamp Tools
   tool_shed_url: https://toolshed.g2.bx.psu.edu/view/pjbriggs/trimmomatic/59054f086eca
 - name: fastqc
   owner: devteam

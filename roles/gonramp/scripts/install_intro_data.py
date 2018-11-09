@@ -21,13 +21,20 @@ PARSER.add_argument('-k', type=str,
 PARSER.add_argument('-l', type=str,
                     help="the folder you wish to upload to your library from",
                     required=True)
+PARSER.add_argument('-n', type=str,
+                    help="the name of the library",
+                    required=True)
+PARSER.add_argument('-d', type=str,
+                    help="a description of the library",
+                    required=True)
 
 ARGS = PARSER.parse_args()
 
 GI = galaxy.GalaxyInstance(url=ARGS.a, key=ARGS.k)
 LC = galaxy.libraries.LibraryClient(GI)
 
-LIB_NAME = "Intro to G-OnRamp"
+LIB_NAME = ARGS.n
+LIB_DESC = ARGS.d
 
 EXTANT_LIBS = LC.get_libraries(name=LIB_NAME)
 
@@ -40,8 +47,7 @@ if EXTANT_LIBS:
             break
 
 if INSTALL:
-    LIB_DATA = LC.create_library("Intro to G-OnRamp",
-                                 "Sample data sets for G-OnRamp's introductory walk-through")
+    LIB_DATA = LC.create_library(LIB_NAME, LIB_DESC)
 
     FILES = [join(ARGS.l, lf) for lf in listdir(ARGS.l) \
             if isfile(join(ARGS.l, lf))]
