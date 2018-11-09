@@ -1,6 +1,5 @@
 # everything's bad
-*
-roles/*
+/*
 
 # but some things aren't bad
 !.gitignore
@@ -10,14 +9,8 @@ roles/*
 !gonramp_vars
 !kickstart.sh
 !LICENSE
-
-# and some directories are good
-!modified_roles/*
-!roles/gonramp
-!roles/gonramp/files
-!roles/gonramp/files/*
-!roles/apollo
-!roles/openjdk
+!/roles/
+!modified_roles
 
 # but some subdirectories are not!
 roles/gonramp/workflows/*
