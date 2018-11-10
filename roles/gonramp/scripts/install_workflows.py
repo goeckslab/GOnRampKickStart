@@ -29,8 +29,6 @@ PARSER.add_argument('-wd', help="directory of workflow files (*.ga) to install t
 PARSER.add_argument('-t',\
                     help="flag that indicates tools should be installed from workflows",\
                     action="store_true")
-PARSER.add_argument('-add', type=str,\
-                    help="tool addendum yml file", required=False)
 
 ARGS = PARSER.parse_args()
 
@@ -122,13 +120,9 @@ def install_all():
         call(["pwd"])
         t_args = ["-a", ARGS.a, "-k", ARGS.k, "-t", tmp_file]
         call([env, "python", cmd] + t_args)
-        if ARGS.add and exists(ARGS.add):
-            add_args = ["-a", ARGS.a, "-k", ARGS.k, "-t", ARGS.add]
-            call([env, "python", cmd] + add_args)
-            call([env, "rm", "-f", ARGS.add])
         call([env, "rm", "-f", tmp_file])
 
-        ta_file = "/tmp/tool_addenda.yml"
+        ta_file = "/tmp/gonramp/tool_addenda.yml"
         if isfile(ta_file):
             ta_args = ["-a", ARGS.a, "-k", ARGS.k, "-t", ta_file]
             call([env, "python", cmd] + ta_args)
