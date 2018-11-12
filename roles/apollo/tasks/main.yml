@@ -11,3 +11,16 @@
   tags:
     - apollo_dependencies
     - ubuntu
+
+- name: give tomcat time to restart
+#  wait_for:
+#    host:
+  uri:
+    url: "http://{{galaxy_ip_address}}/apollo/annotator/index"
+    status_code: 200
+  register: result
+  until: ( result.status == 200 ) and ('<title>Annotator</title>' in result.content)
+  retries: 60
+  delay: 2
+  tags:
+   - apollo_check
