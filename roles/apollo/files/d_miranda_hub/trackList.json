@@ -1,0 +1,233 @@
+{
+   "formatVersion" : 1,
+   "names" : {
+      "type" : "Hash",
+      "url" : "names/"
+   },
+   "tracks" : [
+      {
+         "category" : "Reference sequence",
+         "faiUrlTemplate" : "seq/D.miranda.renamed.scaffold_6.unmasked.fa.txt.fasta.fai",
+         "key" : "Reference sequence",
+         "label" : "DNA",
+         "seqType" : "dna",
+         "storeClass" : "JBrowse/Store/Sequence/IndexedFasta",
+         "type" : "SequenceTrack",
+         "urlTemplate" : "seq/D.miranda.renamed.scaffold_6.unmasked.fa.txt.fasta",
+         "useAsRefSeqStore" : 1
+      },
+      {
+         "category" : "Sequence Similarity",
+         "glyph" : "JBrowse/View/FeatureGlyph/Segments",
+         "label" : "BLAT Alignment",
+         "menuTemplate" : [
+            {},
+            {
+               "action" : "iframeDialog",
+               "iconClass" : "dijitIconDatabase",
+               "label" : "View feature details in the database",
+               "title" : "feature {name}",
+               "url" : "https://www.ncbi.nlm.nih.gov/nuccore/{name}"
+            }
+         ],
+         "storeClass" : "JBrowse/Store/SeqFeature/GFF3Tabix",
+         "style" : {
+            "className" : "feature",
+            "color" : "#8064a2"
+         },
+         "subfeatureClasses" : "match_part",
+         "type" : "JBrowse/View/Track/CanvasFeatures",
+         "urlTemplate" : "tracks/pslToBigPsl_on_data_17,_data_16,_and_data_39.gff3.gz"
+      },
+      {
+         "category" : "Sequence Similarity",
+         "glyph" : "JBrowse/View/FeatureGlyph/Segments",
+         "label" : "Blast Alignment",
+         "menuTemplate" : [
+            {},
+            {
+               "action" : "iframeDialog",
+               "iconClass" : "dijitIconDatabase",
+               "label" : "View feature details in the database",
+               "title" : "feature {name}",
+               "url" : "https://www.ncbi.nlm.nih.gov/protein/{name}"
+            }
+         ],
+         "storeClass" : "JBrowse/Store/SeqFeature/GFF3Tabix",
+         "style" : {
+            "className" : "feature",
+            "color" : "#4f81bd"
+         },
+         "subfeatureClasses" : "match_part",
+         "type" : "JBrowse/View/Track/CanvasFeatures",
+         "urlTemplate" : "tracks/tblastn_GCF_000001215.4_Release_6_plus_ISO1_MT_protein.faa_vs_nucleotide_BLAST_database_from_data_22_and_data_1__cn__.gff3.gz"
+      },
+      {
+         "category" : "Variants and Repeats",
+         "label" : "Simple Repeats",
+         "storeClass" : "JBrowse/Store/SeqFeature/GFF3Tabix",
+         "style" : {
+            "className" : "feature",
+            "color" : "#f79646"
+         },
+         "type" : "JBrowse/View/Track/CanvasFeatures",
+         "urlTemplate" : "tracks/TrfBig_on_data_1.gff3.gz"
+      },
+      {
+         "category" : "Variants and Repeats",
+         "label" : "WindowMasker",
+         "storeClass" : "JBrowse/Store/SeqFeature/BEDTabix",
+         "style" : {
+            "className" : "feature",
+            "color" : "#f79646"
+         },
+         "type" : "JBrowse/View/Track/CanvasFeatures",
+         "urlTemplate" : "tracks/WindowMasker_ustat_on_data_9_and_data_1"
+      },
+      {
+         "category" : "RNA-Seq Analysis",
+         "glyph" : "JBrowse/View/FeatureGlyph/Segments",
+         "label" : "SRR364798 Splice Junctions",
+         "storeClass" : "JBrowse/Store/SeqFeature/GFF3Tabix",
+         "style" : {
+            "className" : "feature",
+            "color" : "#c0504d"
+         },
+         "subfeatureClasses" : "exon_junction",
+         "type" : "JBrowse/View/Track/CanvasFeatures",
+         "urlTemplate" : "tracks/regtools_junctions_extract_on_data_25:_fixed_output_for_HAC_workflow.gff3.gz"
+      },
+      {
+         "category" : "Mapping and Sequencing",
+         "label" : "GAP",
+         "storeClass" : "JBrowse/Store/SeqFeature/BEDTabix",
+         "style" : {
+            "className" : "feature",
+            "color" : "#4bacc6"
+         },
+         "type" : "JBrowse/View/Track/CanvasFeatures",
+         "urlTemplate" : "tracks/twoBitInfo_on_data_8:_Gaps"
+      },
+      {
+         "category" : "RNA-Seq Analysis",
+         "label" : "SRR364798 Sequence Coverage",
+         "storeClass" : "JBrowse/Store/SeqFeature/BigWig",
+         "style" : {
+            "pos_color" : "#c0504d"
+         },
+         "type" : "JBrowse/View/Track/Wiggle/XYPlot",
+         "urlTemplate" : "bbi/Convert_Bam_to_BigWig_on_data_1_and_data_25"
+      },
+      {
+         "baiUrlTemplate" : "bbi/dataset_365.dat.bai",
+         "category" : "RNA-Seq Analysis",
+         "label" : "SRR364798 HISAT Sequence Alignment",
+         "storeClass" : "JBrowse/Store/SeqFeature/BAM",
+         "type" : "JBrowse/View/Track/Alignments2",
+         "urlTemplate" : "bbi/Filter_SAM_or_BAM,_output_SAM_or_BAM_on_data_18:_bam.bam"
+      },
+      {
+         "category" : "RNA-Seq Analysis",
+         "glyph" : "JBrowse/View/FeatureGlyph/Segments",
+         "label" : "SRR364800 Splice Junctions",
+         "storeClass" : "JBrowse/Store/SeqFeature/GFF3Tabix",
+         "style" : {
+            "className" : "feature",
+            "color" : "#1f497d"
+         },
+         "subfeatureClasses" : "exon_junction",
+         "type" : "JBrowse/View/Track/CanvasFeatures",
+         "urlTemplate" : "tracks/regtools_junctions_extract_on_data_26:_fixed_output_for_HAC_workflow.gff3.gz"
+      },
+      {
+         "category" : "Mapping and Sequencing",
+         "label" : "GC Percent ",
+         "storeClass" : "JBrowse/Store/SeqFeature/BigWig",
+         "style" : {
+            "pos_color" : "#4bacc6"
+         },
+         "type" : "JBrowse/View/Track/Wiggle/XYPlot",
+         "urlTemplate" : "bbi/hgGcPercent_on_data_8"
+      },
+      {
+         "category" : "RNA-Seq Analysis",
+         "label" : "SRR364800 Sequence Coverage",
+         "storeClass" : "JBrowse/Store/SeqFeature/BigWig",
+         "style" : {
+            "pos_color" : "#1f497d"
+         },
+         "type" : "JBrowse/View/Track/Wiggle/XYPlot",
+         "urlTemplate" : "bbi/Convert_Bam_to_BigWig_on_data_1_and_data_26"
+      },
+      {
+         "baiUrlTemplate" : "bbi/dataset_366.dat.bai",
+         "category" : "RNA-Seq Analysis",
+         "label" : "SRR364800 Sequence Alignment",
+         "storeClass" : "JBrowse/Store/SeqFeature/BAM",
+         "type" : "JBrowse/View/Track/Alignments2",
+         "urlTemplate" : "bbi/Filter_SAM_or_BAM,_output_SAM_or_BAM_on_data_19:_bam.bam"
+      },
+      {
+         "category" : "RNA-Seq Analysis",
+         "glyph" : "JBrowse/View/FeatureGlyph/Segments",
+         "label" : "SRR364800 StringTie Transcripts",
+         "storeClass" : "JBrowse/Store/SeqFeature/GFF3Tabix",
+         "style" : {
+            "className" : "feature",
+            "color" : "#1f497d"
+         },
+         "subfeatureClasses" : "UTR",
+         "type" : "JBrowse/View/Track/CanvasFeatures",
+         "urlTemplate" : "tracks/StringTie_on_data_26:_Assembled_transcripts.gff3.gz"
+      },
+      {
+         "category" : "Gene Predictions",
+         "label" : "Augustus Gene Prediction",
+         "storeClass" : "JBrowse/Store/SeqFeature/GFF3Tabix",
+         "style" : {
+            "className" : "feature",
+            "color" : "#9bbb59"
+         },
+         "subfeatureClasses" : "CDS",
+         "type" : "JBrowse/View/Track/CanvasFeatures",
+         "urlTemplate" : "tracks/Augustus_on_data_1:_GTF_GFF.gff3.gz"
+      },
+      {
+         "category" : "RNA-Seq Analysis",
+         "glyph" : "JBrowse/View/FeatureGlyph/Segments",
+         "label" : "SRR364798 StringTie Transcripts",
+         "storeClass" : "JBrowse/Store/SeqFeature/GFF3Tabix",
+         "style" : {
+            "className" : "feature",
+            "color" : "#c0504d"
+         },
+         "subfeatureClasses" : "UTR",
+         "type" : "JBrowse/View/Track/CanvasFeatures",
+         "urlTemplate" : "tracks/StringTie_on_data_25:_Assembled_transcripts.gff3.gz"
+      },
+      {
+         "category" : "Gene Predictions",
+         "label" : "GlimmerHMM Gene Prediction",
+         "storeClass" : "JBrowse/Store/SeqFeature/GFF3Tabix",
+         "style" : {
+            "className" : "feature",
+            "color" : "#9bbb59"
+         },
+         "subfeatureClasses" : "CDS",
+         "type" : "JBrowse/View/Track/CanvasFeatures",
+         "urlTemplate" : "tracks/Multi_Fasta_GlimmerHMM_on_data_1.gff3.gz"
+      },
+      {
+         "category" : "Gene Predictions",
+         "label" : "SNAP Gene Prediction",
+         "storeClass" : "JBrowse/Store/SeqFeature/GFF3Tabix",
+         "style" : {
+            "className" : "feature",
+            "color" : "#9bbb59"
+         },
+         "subfeatureClasses" : "CDS",
+         "type" : "JBrowse/View/Track/CanvasFeatures",
+         "urlTemplate" : "tracks/Semi-HMM-based_Nucleic_Acid_Parser_(SNAP)_on_data_1:_GTF_GFF3.gff3.gz"
+      }
+   ]
+}
