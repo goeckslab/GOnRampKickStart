@@ -11,3 +11,39 @@
   tags:
     - apollo_dependencies
     - ubuntu
+
+- name: move D.Miranda files over
+  copy:
+    src: files/d_miranda_hub
+    dest: "/home/{{ galaxy_user_name }}/shared_dir"
+    owner: galaxy
+    group: users
+    mode: 0644
+
+- name: give tomcat time to restart
+  uri:
+    url: "http://{{galaxy_ip_address}}/apollo/annotator/index"
+    status_code: 200
+    return_content: yes
+  register: result
+  until: ("content" in result) and ('Annotator' in result.content)
+  retries: 60
+  delay: 2
+  tags:
+   - apollo_check
+
+- name: perform apollo API request to register D.Miranda
+  uri:
+    url: "http://{{galaxy_ip_address}}/apollo/"
+    method: POST
+    body:
+      username: "{{apollo_admin_user}}"
+      password: "{{apollo_admin_pass}}"
+      directory: "/home/{{ galaxy_user_name }}/shared_dir"
+      commonName: "Drosophila miranda MSH22 (unmask scaffold_6)"
+      species: "miranda"
+      genus: "Drosophila"
+      publicMode: true
+      returnAllOrganisms: false
+  tags:
+  - dmiranda_install
