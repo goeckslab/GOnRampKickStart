@@ -34,13 +34,13 @@
 
 - name: perform apollo API request to register D.Miranda
   uri:
-    url: "http://{{galaxy_ip_address}}/apollo/"
+    url: "http://{{galaxy_ip_address}}/apollo/organism/addOrganism"
     method: POST
     body_format: form-urlencoded
     body:
       username: "{{apollo_admin_user}}"
       password: "{{apollo_admin_pass}}"
-      directory: "/home/{{ galaxy_user_name }}/shared_dir"
+      directory: "/home/{{ galaxy_user_name }}/shared_dir/d_miranda_hub"
       commonName: "Drosophila miranda MSH22 (unmask scaffold_6)"
       species: "miranda"
       genus: "Drosophila"
