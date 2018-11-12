@@ -53,8 +53,8 @@ apollo_os_gid: 1337
 apollo_os_uid: "{{ apollo_os_gid }}"
 apollo_version: "jbrowse-1.15"
 
-jbrowse_tag: "1.15.4-release"
-jbrowse_source: "https://github.com/GMOD/jbrowse"
+jbrowse_tag: "cosmetic_changes"
+jbrowse_source: "https://github.com/luke-c-sargent/jbrowse"
 
 # apollo admin user information
 apollo_admin_user: "{{galaxy_admin | default('apollo_admin')}}"
