@@ -36,6 +36,7 @@
   uri:
     url: "http://{{galaxy_ip_address}}/apollo/"
     method: POST
+    body_format: form-urlencoded
     body:
       username: "{{apollo_admin_user}}"
       password: "{{apollo_admin_pass}}"
