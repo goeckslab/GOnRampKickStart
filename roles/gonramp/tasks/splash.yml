@@ -1,5 +1,7 @@
 ---
 - name: Add a custom /etc/issue login splash screen
-  copy:
-    src: "{{role_path}}/files/issue"
-    dest: "/etc/issue"
+  template:
+    src: 'issue.j2'
+    dest: /etc/issue
+  tags:
+   - splash
