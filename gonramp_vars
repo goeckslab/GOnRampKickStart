@@ -46,7 +46,7 @@ extra_env_variables:
   just_handlers: {}
   just_web: {}
 
-# APOLLO CONFIG
+# APOLLO CONFIG------------------------------------------------------------
 # default variable values
 apollo_os_user: "apollo_sys"
 apollo_os_gid: 1337

@@ -69,6 +69,22 @@
   tags:
     - tools_and_workflows
 
+- name: get info to include fastqc in whitelist
+  uri:
+    url: http://{{ galaxy_ip_address }}/api/configuration/toolbox
+    method: PUT
+    body: "key={{ default_admin_api_key }}"
+  register: fastqc_info
+  tags:
+    - get_fastqc_info
+
+- name: dbug
+  debug:
+    msg: "{{fastqc_info}}"
+  tags:
+    - get_fastqc_info
+
+
 - include: install_local_tools.yml
   become: yes
   become_user: "{{galaxy_user_name}}"
