@@ -16,6 +16,7 @@ galaxy_changeset_id: release_18.05
 supervisor_webserver: False
 
 tool_dependency_dir: /home/{{ galaxy_user_name }}/tool_dependencies
+whitelist_file: /home/{{ galaxy_user_name }}/galaxy/config/sanitize_whitelist.txt
 
 #proftp masquerade address for dynamic IPs
 proftpd_passive_port_high: 30100
