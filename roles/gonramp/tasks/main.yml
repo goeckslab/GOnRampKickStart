@@ -94,6 +94,7 @@
   get_url:
     url: ftp://ftp.ccb.jhu.edu/pub/infphilo/hisat2/data/mm10.tar.gz
     dest: /tmp/mm10.tar.gz
+    checksum: 65130b97b801ff6779ad42b3da5d401f311887a2e2adb8a1d97731912fc1826d
   tags:
     - get_hisat2_data
     - mm10
