@@ -90,13 +90,6 @@
     - whitelist
     - set_fastqc_info
 
-- name: dbug
-  debug:
-    msg: "{{ fastqc_info.json.id }}"
-  tags:
-    - get_fastqc_info
-
-
 - include: install_local_tools.yml
   become: yes
   become_user: "{{galaxy_user_name}}"
