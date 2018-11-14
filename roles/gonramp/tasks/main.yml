@@ -90,6 +90,49 @@
     - whitelist
     - set_fastqc_info
 
+- name: add mm10 to server
+  get_url:
+    url: ftp://ftp.ccb.jhu.edu/pub/infphilo/hisat2/data/mm10.tar.gz
+    dest: /tmp/mm10.tar.gz
+  tags:
+    - get_hisat2_data
+    - mm10
+
+- name: make mm10 a new home
+  file:
+    path: "{{ hisat_locale }}/mm10"
+    state: directory
+    owner: "{{ galaxy_user_name }}"
+    group: users
+    mode: 0644
+  tags:
+    - make_mm10_dir
+    - mm10
+
+- name: unarchive mm10 in its final resting place
+  unarchive:
+    remote_src: yes
+    src: /tmp/mm10.tar.gz
+    dest: "{{ tool_data }}/hisat2_indexes/mm10"
+    owner: "{{ galaxy_user_name }}"
+    group: users
+    mode: 0644
+  tags:
+    - move_hisat2_data
+    - mm10
+
+- name: configure hisat2_indexes.loc to contain mm10 info
+  lineinfile:
+    path: "{{ tool_data }}/hisat2_indices.loc"
+    line: "mm10	mm10	Mouse (mm10)	{{ tool_data }}/hisat2_indexes/mm10/genome"
+    create: yes
+    owner: "{{ galaxy_user_name }}"
+    group: users
+    mode: 0644
+  tags:
+    - mm10
+    - set_hisat2_info
+
 - include: install_local_tools.yml
   become: yes
   become_user: "{{galaxy_user_name}}"
