@@ -83,7 +83,7 @@
     path: "{{ whitelist_file }}"
     line: "{{ fastqc_info.json.id }}"
     create: yes
-    owner: {{ galaxy_user_name }}
+    owner: "{{ galaxy_user_name }}"
     group: users
     mode: 0644
   tags:
