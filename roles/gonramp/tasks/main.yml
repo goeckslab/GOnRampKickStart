@@ -72,8 +72,7 @@
 - name: get info to include fastqc in whitelist
   uri:
     url: http://{{ galaxy_ip_address }}/api/tools/fastqc
-    method: PUT
-    body: "key={{ default_admin_api_key }}"
+    method: GET
   register: fastqc_info
   tags:
     - get_fastqc_info
