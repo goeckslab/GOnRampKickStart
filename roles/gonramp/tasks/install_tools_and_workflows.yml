@@ -30,7 +30,7 @@
 - name: "Copy tool addenda file to remote temp directory"
   copy:
     src: "{{ role_path }}/files/tool_addenda.yml"
-    dest: "/tmp/tool_addenda.yml"
+    dest: "/tmp/gonramp/tool_addenda.yml"
     mode: 0755
   when: addenda_check.stat.islnk is defined
 
