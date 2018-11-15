@@ -101,7 +101,7 @@
 
 - name: make mm10 a new home
   file:
-    path: "{{ hisat_locale }}/mm10"
+    path: "{{ tool_data }}/hisat2_indexes/mm10"
     state: directory
     owner: "{{ galaxy_user_name }}"
     group: users
