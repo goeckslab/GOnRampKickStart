@@ -117,7 +117,7 @@ then
 
   # install galaxy,
   echo "$PFX Installing G-OnRamp ... "
-  printf "${RED}WARNING!${NC} This will take some time (upwards of an hour)\n"
+  printf "${RED}WARNING!${NC} This will take some time (multiple hours)\n"
   ansible-playbook -i ./gonramp_inventory gonramp.yml $TAGSTRING
   R=$?
 
