@@ -124,7 +124,7 @@
 
 - name: configure hisat2_indexes.loc to contain mm10 info
   lineinfile:
-    path: "{{ tool_data }}/hisat2_indices.loc"
+    path: "{{ tool_data }}/hisat2_indexes.loc"
     line: "mm10	mm10	Mouse (mm10)	{{ tool_data }}/hisat2_indexes/mm10/genome"
     create: yes
     owner: "{{ galaxy_user_name }}"
