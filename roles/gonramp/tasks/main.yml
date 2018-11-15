@@ -138,7 +138,7 @@
   lineinfile:
     path: "{{ galaxy_config_dir }}/shed_tool_data_table_conf.xml"
     line: "    <file path=\"{{ tool_data }}/hisat2_indexes.loc\" />"
-    regexp: "\n\s+<file path.*>"
+    regexp: '\n\s+<file path.*>'
     owner: "{{ galaxy_user_name }}"
     group: users
     mode: 0644
