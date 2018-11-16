@@ -135,10 +135,10 @@
     - set_hisat2_info
 
 - name: add hisat2_indexes.loc to shed_tool_data_table_conf.xml
-  lineinfile:
+  replace:
     path: "{{ galaxy_config_dir }}/shed_tool_data_table_conf.xml"
-    line: "    <file path=\"{{ tool_data }}/hisat2_indexes.loc\" />"
-    regexp: '\n\s+<file path.*>'
+    replace: "        <file path=\"{{ tool_data }}/hisat2_indexes.loc\" />"
+    regexp: '^\s+<file.*hisat2_indexes.*\/>'
     owner: "{{ galaxy_user_name }}"
     group: users
     mode: 0644
