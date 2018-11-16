@@ -117,7 +117,7 @@
     dest: "{{ tool_data }}/hisat2_indexes/mm10"
     owner: "{{ galaxy_user_name }}"
     group: users
-    mode: 0644
+    mode: 0755
   tags:
     - move_hisat2_data
     - mm10
