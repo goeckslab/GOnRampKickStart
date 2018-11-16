@@ -101,11 +101,11 @@
 
 - name: make mm10 a new home
   file:
-    path: "{{ tool_data }}/hisat2_indexes/mm10"
+    path: "{{ tool_data }}/hisat2_indexes"
     state: directory
     owner: "{{ galaxy_user_name }}"
     group: users
-    mode: 0644
+    mode: 0755
   tags:
     - make_mm10_dir
     - mm10
@@ -114,7 +114,7 @@
   unarchive:
     remote_src: yes
     src: /tmp/mm10.tar.gz
-    dest: "{{ tool_data }}/hisat2_indexes/mm10"
+    dest: "{{ tool_data }}/hisat2_indexes/"
     owner: "{{ galaxy_user_name }}"
     group: users
     mode: 0755
