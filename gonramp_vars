@@ -27,6 +27,9 @@ proftpd_masquerade_address: "`curl -4 -s icanhazip.com`"
 #change uwsgi port to avoid conflict with apollo's JMS usage on port 4001
 uwsgi_port: 40000
 
+# install mm10 directly, or data manager?
+direct_install_mm10: True
+
 paste_installer_port: 8888
 local_tool_dir_name: "local_tools"
 gonramp_tools_repo: https://github.com/goeckslab/galaxy-tools.git

@@ -95,6 +95,7 @@
     url: ftp://ftp.ccb.jhu.edu/pub/infphilo/hisat2/data/mm10.tar.gz
     dest: /tmp/mm10.tar.gz
     checksum: sha256:65130b97b801ff6779ad42b3da5d401f311887a2e2adb8a1d97731912fc1826d
+  when: direct_install_mm10
   tags:
     - get_hisat2_data
     - mm10
@@ -106,6 +107,7 @@
     owner: "{{ galaxy_user_name }}"
     group: users
     mode: 0755
+  when: direct_install_mm10
   tags:
     - make_mm10_dir
     - mm10
@@ -118,6 +120,7 @@
     owner: "{{ galaxy_user_name }}"
     group: users
     mode: 0755
+  when: direct_install_mm10
   tags:
     - move_hisat2_data
     - mm10
@@ -130,6 +133,7 @@
     owner: "{{ galaxy_user_name }}"
     group: users
     mode: 0644
+  when: direct_install_mm10
   tags:
     - mm10
     - set_hisat2_info
@@ -142,10 +146,11 @@
     owner: "{{ galaxy_user_name }}"
     group: users
     mode: 0644
+  when: direct_install_mm10
   tags:
     - hisat2_loc_shed_tool_data_table_conf
     - mm10
-    - set_hisate2_info
+    - set_hisat2_info
 
 - include: install_local_tools.yml
   become: yes
