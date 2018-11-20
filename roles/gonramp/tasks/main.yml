@@ -196,6 +196,16 @@
   tags:
     - copy_logo_over
 
+- name: copy favicon images over
+  copy:
+    src: files/fav
+    dest: "/home/{{ galaxy_user_name }}/galaxy/static/images"
+    owner: galaxy
+    group: users
+    mode: 0644
+  tags:
+    - copy_favicons
+
 - name: restart all services
   become: yes
   shell: supervisorctl restart all
