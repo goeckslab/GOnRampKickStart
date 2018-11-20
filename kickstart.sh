@@ -27,13 +27,20 @@ function usage
   echo -e "\t-s: tags to skip, running all other tags"
   echo -e "\t\tnote: these options are mutually exclusive\n"
   echo -e "\t- verbosity flag -v N where N=1..4 optional;\n\t\t - include before or after tag flags\n"
+  echo -e "\t -i: install gonrampkickstart only -- stops before running ansible\n"
 }
 
 TAGSTRING=""
+INSTALL=1
+
 
 while (( "$#" )); do
 
         case $1 in
+          -i | --install_only )
+            INSTALL=0
+            shift 1
+            ;;
           -t | --tags )
             TAGSTRING="--tags $2 "
             shift 2
@@ -114,6 +121,15 @@ then
   fi
 
   export ANSIBLE_HOST_KEY_CHECKING=False
+  
+
+  if [[ $INSTALL -eq 0 ]]
+  then
+    echo "gonrampkickstart initialized ... run:"
+    echo "   $ ansible-playbook -i gonramp_inventory gonramp.yml"
+    echo " ... to install g-onramp"
+    exit
+  fi
 
   # install galaxy,
   echo "$PFX Installing G-OnRamp ... "
