@@ -26,7 +26,7 @@ function usage
   echo -e "\t-t: tags to run, to the exclusion of all other tags"
   echo -e "\t-s: tags to skip, running all other tags"
   echo -e "\t\tnote: these options are mutually exclusive\n"
-  echo -e "\t\t - verbosity flag -v N where N=1..4 optional;\n\t\t - include before or after tag flags\n"
+  echo -e "\t- verbosity flag -v N where N=1..4 optional;\n\t\t - include before or after tag flags\n"
 }
 
 TAGSTRING=""
