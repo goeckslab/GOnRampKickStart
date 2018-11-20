@@ -189,6 +189,13 @@
   tags:
     - splash_screen
 
+- name: Copy logo
+  copy:
+    src: "{{role_path}}/files/logo.png"
+    dest: "{{ galaxy_server_dir }}/static/images/"
+  tags:
+    - copy_logo_over
+
 - name: restart all services
   become: yes
   shell: supervisorctl restart all
