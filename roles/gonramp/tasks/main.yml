@@ -196,10 +196,10 @@
   tags:
     - copy_logo_over
 
-- name: copy favicon images over
+- name: copy favicon over
   copy:
-    src: files/fav
-    dest: "/home/{{ galaxy_user_name }}/galaxy/static/images"
+    src: files/favicon.ico
+    dest: "/home/{{ galaxy_user_name }}/galaxy/static/favicon.ico"
     owner: galaxy
     group: users
     mode: 0644
