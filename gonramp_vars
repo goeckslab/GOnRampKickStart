@@ -18,6 +18,7 @@ supervisor_webserver: False
 tool_dependency_dir: /home/{{ galaxy_user_name }}/tool_dependencies
 whitelist_file: /home/{{ galaxy_user_name }}/galaxy/config/sanitize_whitelist.txt
 tool_data: /home/{{ galaxy_user_name }}/galaxy/tool-data
+tool_data_table_config_path: /home/{{ galaxy_user_name }}/galaxy/config/tool_data_table_conf.xml
 
 #proftp masquerade address for dynamic IPs
 proftpd_passive_port_high: 30100
@@ -27,8 +28,11 @@ proftpd_masquerade_address: "`curl -4 -s icanhazip.com`"
 #change uwsgi port to avoid conflict with apollo's JMS usage on port 4001
 uwsgi_port: 40000
 
-# install mm10 directly, or data manager?
-direct_install_mm10: True
+# install mm10 directly?
+direct_install_mm10: False
+
+# cvmfs
+galaxy_extras_config_cvmfs: True
 
 paste_installer_port: 8888
 local_tool_dir_name: "local_tools"

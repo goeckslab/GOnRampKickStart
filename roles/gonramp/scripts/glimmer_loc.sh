@@ -93,9 +93,7 @@ GLIMMER_CONF='\
 	</table>\
 '
 
-#GALAXYDR="/home/galaxy/galaxy"
 LOC_FILE="$TOOLDATADIR/glimmer_hmm.loc"
-#CONF_XML="$GALAXYDR/config/tool_data_table_conf.xml.sample"
 
 
 # write glimmer
