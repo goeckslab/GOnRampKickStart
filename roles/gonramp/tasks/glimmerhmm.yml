@@ -1,4 +1,4 @@
 ---
 - name: Execute GlimmerHMM configuration script
   become: yes
-  script: "{{role_path}}/scripts/./glimmer_loc.sh -t {{ tool_dependency_dir }} -d {{ galaxy_server_dir }}/tool-data -c {{ galaxy_config_default['app:main']['tool_data_table_config_path'] }}"
+  script: "{{role_path}}/scripts/./glimmer_loc.sh -t {{ tool_dependency_dir }} -d {{ galaxy_server_dir }}/tool-data -c {{ tool_data_table_config_path }}"
