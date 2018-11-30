@@ -86,7 +86,7 @@ priority        = 100
 {% if supervisor_manage_proftp|bool %}
 [program:proftpd]
 {% if proftpd_nat_masquerade %}
-command         = bash -c " source /etc/environment; export MASQUERADE_ADDRESS=$MASQUERADE_ADDRESS && /usr/sbin/proftpd -n -c {{proftpd_conf_path}}"
+command         = bash -c "source /etc/systemd/system/proftpd_script/masquerade_addr.sh; source /etc/environment; export MASQUERADE_ADDRESS=$MASQUERADE_ADDRESS && /usr/sbin/proftpd -n -c {{proftpd_conf_path}}"
 {% else %}
 command         = /usr/sbin/proftpd -n -c {{proftpd_conf_path}}
 {% endif %}

@@ -1,8 +1,0 @@
-[Unit]
-Description=Masquerade service
-Wants=network-online.target
-After=network.target network-online.target
-
-[Service]
-Type=oneshot
-ExecStart=/lib/systemd/system/proftpd_script/masquerade_addr.sh
