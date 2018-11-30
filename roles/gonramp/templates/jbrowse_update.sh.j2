@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+SERVER_ADDRESS="$(cat /etc/network/interfaces | grep -v \"\#\" | grep address | cut -d' ' -f2-)"
+
+if [ -z "$SERVER_ADDRESS" ]; then
+	SERVER_ADDRESS="$(curl -s icanhazip.com)"
+fi
+
+if [ ! $? ]; then
+	exit 1
+fi
+
+STR="    <url>http:\/\/$SERVER_ADDRESS\/jbrowse\/index.html?data=\${qp(\$hub_file.url + '\/myHub')}<\/url>"
+
+sudo sed -i "/http/c\\$STR" "{{galaxy_server_dir}}/display_applications/jbrowse/jbrowsehub.xml"

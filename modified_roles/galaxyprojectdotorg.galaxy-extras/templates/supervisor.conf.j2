@@ -219,6 +219,14 @@ autostart       = true
 autorestart     = true
 {% endif %}
 
+[program:jbrowse_config]
+command         = /bin/bash {{galaxy_server_dir}}/display_applications/jbrowse/jbrowse_update.sh
+autostart       = true
+autorestart     = true
+stopasgroup     = true
+killasgroup     = true
+
+
 [group:galaxy]
 {% if supervisor_manage_ie_proxy|bool %}
 programs = handler, galaxy_web, galaxy_nodejs_proxy
