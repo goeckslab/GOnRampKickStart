@@ -1,6 +1,6 @@
 <display id="jbrowsehub" version="1.0.0" name="display JBrowse Hub at JBrowse">
   <link id="jbrowse" name="Display with JBrowse">
-    <url>http://{{galaxy_ip_address}}/jbrowse/index.html?data=${qp($hub_file.url + '/myHub')}</url>
+    <url>/jbrowse/index.html?data=${qp($hub_file.url + '/myHub')}</url>
     <param type="data" name="hub_file" url="${DATASET_HASH}" allow_extra_files_access="True" />
   </link>
 </display>
