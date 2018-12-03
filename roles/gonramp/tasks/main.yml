@@ -206,6 +206,10 @@
   tags:
     - copy_favicons
 
+- include: hostname_fix.yml
+  tags:
+    - hostname_fix
+
 - name: restart all services
   become: yes
   shell: supervisorctl restart all
