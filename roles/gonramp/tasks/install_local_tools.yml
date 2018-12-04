@@ -55,5 +55,9 @@
     method: POST
     body: "key={{ default_admin_api_key }}"
     timeout: 180
+  retries: 3
+  delay: 5
+  register: result
+  until: result.status == 200
   tags:
     - api_install_irods
