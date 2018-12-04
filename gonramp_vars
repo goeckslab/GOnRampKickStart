@@ -6,7 +6,7 @@ galaxy_tools_admin_user_preset_api_key: yes
 default_admin_api_key: 472d4f6e52616d7020415049204b6579
 generate_api_key: True
 
-galaxy_extras_slurm_ntask: "{{ ansible_processor_vcpus }}"
+# galaxy_extras_slurm_ntask: "{{ ansible_processor_vcpus }}"
 
 configure_docker: no
 
