@@ -15,4 +15,4 @@ ff02::2 ip6-allrouters
 ff02::3 ip6-allhosts
 EOF
 
-service hostname restart
+hostnamectl set-hostname new-name
