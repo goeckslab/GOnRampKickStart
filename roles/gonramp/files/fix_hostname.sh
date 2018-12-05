@@ -15,4 +15,4 @@ ff02::2 ip6-allrouters
 ff02::3 ip6-allhosts
 EOF
 
-hostnamectl set-hostname new-name
+hostnamectl set-hostname $HN
