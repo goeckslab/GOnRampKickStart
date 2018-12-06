@@ -5,7 +5,7 @@
     - systemd_hostname_fix
 
 - name:  Copy hostname_fix.service
-  copy: src=files/hostname_fix.service dest=/etc/systemd/system/fix_hostname.sh mode=0755
+  copy: src=files/hostname_fix.service dest=/etc/systemd/system/hostname_fix.service mode=0755
   tags:
     - systemd_hostname_fix
 
@@ -19,8 +19,10 @@
     name: hostname_fix
     state: started
     enabled: yes
+    daemon-reload: yes
   tags:
     - systemd_hostname_fix
+    - hostname_start
 
 - name: Run the fix_hostname script (needed for CVMFS & Slurm)
   command: /etc/init.d/fix_hostname.sh
