@@ -1,9 +1,26 @@
 ---
 - name:  Copy fix_hostname script
   copy: src=files/fix_hostname.sh dest=/etc/init.d/fix_hostname.sh mode=0755
+  tags:
+    - systemd_hostname_fix
+
+- name:  Copy hostname_fix.service
+  copy: src=files/hostname_fix.service dest=/etc/systemd/system/fix_hostname.sh mode=0755
+  tags:
+    - systemd_hostname_fix
 
 - name: Add fix_hostname script to rc2
   file: src=/etc/init.d/fix_hostname.sh dest=/etc/rc2.d/S18fix-hostname state=link
+  tags:
+    - systemd_hostname_fix
+
+- name: start service
+  systemd:
+    name: hostname_fix
+    state: started
+    enabled: yes
+  tags:
+    - systemd_hostname_fix
 
 - name: Run the fix_hostname script (needed for CVMFS & Slurm)
   command: /etc/init.d/fix_hostname.sh

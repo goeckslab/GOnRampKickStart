@@ -1,0 +1,11 @@
+[Unit]
+Description=Startup hostname fix
+After=network.target
+After=systemd-user-sessions.service
+After=network-online.target
+
+[Service]
+ExecStart=/etc/init.d/fix_hostname.sh
+
+[Install]
+WantedBy=multi-user.target
