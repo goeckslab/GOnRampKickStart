@@ -74,7 +74,7 @@ while (( "$#" )); do
 done
 
 # ensure correct version of ansible
-if ansible --version | grep --quiet -E 'ansible 2.2.|ansible 2.1.|ansible 2.3.|ansible 2.4.|ansible 2.5.|ansible 2.6.'
+if ansible --version | head -n 1 | grep -q -v -E "ansible 2.1|ansible 1." 
 then
   echo "$PFX Ansible found, acquiring GalaxyKickStart.."
 
