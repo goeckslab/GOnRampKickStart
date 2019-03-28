@@ -13,6 +13,7 @@
 !LICENSE
 !/roles/
 !modified_roles
+!requirements_roles.yml
 
 # but some subdirectories are not!
 roles/gonramp/workflows/*

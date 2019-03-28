@@ -109,12 +109,14 @@ then
     git clone $WORKFLOWS --depth 1 roles/gonramp/workflows
     rm -rf roles/gonramp/workflows/LICENSE
 
+    mv requirements_roles.yml ./temporino/requirements_roles.yml
+
     cp -R ./temporino/ .
     rm -rf temporino
 
     mv gonramp_vars group_vars/gonramp
 
-#    ansible-galaxy install -r requirements_roles.yml -p roles
+    ansible-galaxy install -r requirements_roles.yml -p roles
 
     cp -Rf modified_roles/* roles/
 
