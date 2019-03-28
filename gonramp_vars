@@ -10,7 +10,7 @@ generate_api_key: True
 
 configure_docker: no
 
-galaxy_changeset_id: release_18.05
+galaxy_changeset_id: release_19.01
 
 # disable supervisor webserver
 supervisor_webserver: False

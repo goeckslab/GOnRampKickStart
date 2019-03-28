@@ -12,22 +12,22 @@ TRANSPORT_CFG_LINE="transport = paramiko"
 WORKFLOWS=https://github.com/goeckslab/G-OnRamp-workflows
 EXTRACT_DIR=G-OnRamp-workflows-master
 
-GKS_SHA_PIN=e7dd64b6bc35400fa41e2dec18a68c55d0beb128 #fc5050fd0665f16526e802a4aca207daa6a68b5b
-SHALLOW_SINCE=2018-09-01
+GKS_SHA_PIN=31b9ff9390d7d199fc968241027f96f8493cd8b2 #e7dd64b6bc35400fa41e2dec18a68c55d0beb128
+SHALLOW_SINCE=2019-02-01
 
 SHALLOW="--shallow-since=$SHALLOW_SINCE"
 
 function usage
 {
-  echo "usage:"
-  echo -e "  $0 -t \"comma,seperated,tags\""
-  echo -e "\t\t\tOR"
-  echo -e "  $0 -s \"comma,seperated,tags\""
-  echo -e "\t-t: tags to run, to the exclusion of all other tags"
-  echo -e "\t-s: tags to skip, running all other tags"
-  echo -e "\t\tnote: these options are mutually exclusive\n"
-  echo -e "\t- verbosity flag -v N where N=1..4 optional;\n\t\t - include before or after tag flags\n"
-  echo -e "\t -i: install gonrampkickstart only -- stops before running ansible\n"
+  echo "Usage:\n"
+  echo "  $0 -t \"comma,seperated,tags\""
+  echo "\t\t\tOR"
+  echo "  $0 -s \"comma,seperated,tags\""
+  echo "\t-t: tags to run, to the exclusion of all other tags"
+  echo "\t-s: tags to skip, running all other tags"
+  echo "\t\tnote: these options are mutually exclusive\n"
+  echo "\t- verbosity flag -v N where N=1..4 optional;\n\t\t - include before or after tag flags\n"
+  echo "\t -i: install gonrampkickstart only -- stops before running ansible\n"
 }
 
 TAGSTRING=""
@@ -40,6 +40,10 @@ while (( "$#" )); do
           -i | --install_only )
             INSTALL=0
             shift 1
+            ;;
+          -h | --help )
+            usage
+            exit 0
             ;;
           -t | --tags )
             TAGSTRING="--tags $2 "
@@ -110,10 +114,8 @@ then
 
     mv gonramp_vars group_vars/gonramp
 
-    ansible-galaxy install -r requirements_roles.yml -p roles
-    # acquire apollo role
-    # git clone https://github.com/goeckslab/ansible-apollo.git roles/apollo
-    # copy over modifications to existent roles
+#    ansible-galaxy install -r requirements_roles.yml -p roles
+
     cp -Rf modified_roles/* roles/
 
   else
