@@ -50,15 +50,7 @@
     - fail:
         msg: "ERROR: {{ ansible_distribution }} {{ ansible_distribution_version }} is not supported"
       when: (ansible_distribution != "Ubuntu") or
-            (ansible_distribution_version != "16.04" and ansible_distribution_version != "14.04")
-
-    - name: modify roles
-      become: yes
-      become_user: "{{ whom.stdout }}"
-      copy:
-        src: "{{playbook_dir}}/modified_roles/"
-        dest: "{{playbook_dir}}/roles"
-      delegate_to: localhost
+            (ansible_distribution_version != "16.04" and ansible_distribution_version != "18.04")
 
     - name: update apt
       apt:
@@ -67,6 +59,10 @@
     - set_fact:
         banner_img: "{% if 'jetstream' in group_names %}jetstream_text.png{% else %}gce_text.png{% endif %}"
       tags: always
+
+    - ipify_facts: # get host ip in "{{ ipify_public_ip }}"
+      tags:
+        - always
 
   roles:
     - role: openjdk
@@ -103,10 +99,10 @@
         - install_galaxy
         - manage_postgres
 
-    - role: miniconda-role
-      tags: conda
-      become: yes
-      become_user: "{{ galaxy_user_name }}"
+    # - role: miniconda-role
+    #   tags: conda
+    #   become: yes
+    #   become_user: "{{ galaxy_user_name }}"
 
     - role: galaxyprojectdotorg.galaxy
       become: yes
