@@ -129,7 +129,7 @@ then
 
     ansible-galaxy install -r requirements_roles.yml -p roles
 
-    cp -Rf modified_roles/* roles/
+#    cp -Rf modified_roles/* roles/
 
   else
     echo "$PFX previous GalaxyKickStart installation found, resuming"
