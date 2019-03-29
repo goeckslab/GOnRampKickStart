@@ -86,11 +86,7 @@ MAJOR="$(echo $ANSIBLE_VERSION | cut -d '.' -f 1)"
 MINOR="$(echo $ANSIBLE_VERSION | cut -d '.' -f 2)"
 
 if [ "$MAJOR" -gt "$ANSIBLE_REQUIRED_MAJOR" ] || [ "$MAJOR" -eq "$ANSIBLE_REQUIRED_MAJOR" ] && [ "$MINOR" -ge "$ANSIBLE_REQUIRED_MINOR" ] ; then
-	echo "yes"
-else
-	echo "no"
-fi
-then
+
   echo "$PFX Ansible found, acquiring GalaxyKickStart.."
 
 
