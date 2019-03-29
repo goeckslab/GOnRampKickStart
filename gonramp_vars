@@ -1,3 +1,5 @@
+galaxy_become_users: {}
+
 # create an administrative user
 galaxy_admin: admin@g-onramp.org
 galaxy_admin_pw: "!?admin?!"
@@ -16,6 +18,7 @@ galaxy_changeset_id: release_19.01
 supervisor_webserver: False
 
 tool_dependency_dir: /home/{{ galaxy_user_name }}/tool_dependencies
+galaxy_tool_dependency_dir: "{{ tool_dependency_dir }}"
 whitelist_file: /home/{{ galaxy_user_name }}/galaxy/config/sanitize_whitelist.txt
 tool_data: /home/{{ galaxy_user_name }}/galaxy/tool-data
 tool_data_table_config_path: /home/{{ galaxy_user_name }}/galaxy/config/tool_data_table_conf.xml
