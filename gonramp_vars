@@ -1,4 +1,13 @@
-galaxy_become_users: {}
+galaxy_separate_privileges: yes
+
+postgresql_version: "{{ '9.3' if ansible_distribution=='Ubuntu'
+                                 and ansible_distribution_version | version_compare('15.04', '<=')
+                              else '10' if ansible_distribution=='Ubuntu'
+                                            and ansible_distribution_version | version_compare('18.04', '>=')
+                              else '9.5' if ansible_distribution=='Ubuntu'
+                                            and ansible_distribution_version | version_compare('16.04', '==')
+                              else '9.4' if ansible_distribution=='Debian'
+                                            and ansible_distribution_version | version_compare('8.0', '>=') }}"
 
 # create an administrative user
 galaxy_admin: admin@g-onramp.org
