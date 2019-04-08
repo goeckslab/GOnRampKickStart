@@ -46,7 +46,6 @@ direct_install_mm10: False
 # cvmfs
 galaxy_extras_config_cvmfs: True
 
-paste_installer_port: 8888
 local_tool_dir_name: "local_tools"
 gonramp_tools_repo: https://github.com/goeckslab/galaxy-tools.git
 gonramp_apollo_tools: ['create_or_update_organism', 'delete_organism', 'apollo_user_manager']
