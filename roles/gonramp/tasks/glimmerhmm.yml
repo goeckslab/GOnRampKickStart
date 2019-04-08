@@ -2,3 +2,14 @@
 - name: Execute GlimmerHMM configuration script
   become: yes
   script: "{{role_path}}/scripts/./glimmer_loc.sh -t {{ tool_dependency_dir }} -d {{ galaxy_server_dir }}/tool-data -c {{ tool_data_table_config_path }}"
+
+- name: modify galaxy config to include second tool_data_table_conf source
+  become: yes
+  become_user: "{{ galaxy_user_name }}"
+  lineinfile:
+    path: "{{ galaxy_config_file }}"
+    regexp: '(^.*tool_data_table_config_path).*$'
+    line: '\1: /cvmfs/data.galaxyproject.org/byhand/location/tool_data_table_conf.xml,/cvmfs/data.galaxyproject.org/managed/location/tool_data_table_conf.xml,config/tool_data_table_conf.xml,config/tool_data_table_conf.xml.sample'
+    backrefs: yes
+  tags:
+    - mod_galaxy_config

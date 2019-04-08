@@ -1,7 +1,0 @@
----
-- name: "Kill the zombies"
-  script: "{{role_path}}/scripts/zombiekiller.sh"
-  register: result
-  until: result.stdout.find("Zombielessness!")
-  retries: 10
-  delay: 1

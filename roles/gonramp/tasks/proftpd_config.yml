@@ -10,6 +10,15 @@
     group: root
     mode: 0544
 
+- name: Modify supervisor script
+  replace:
+    path: "{{ supervisor_conf_path }}"
+    regexp: '(\[program:proftpd\].*\ncommand).*'
+    replace: '\1         = bash -c "source /etc/systemd/system/proftpd_script/masquerade_addr.sh; source /etc/environment; export MASQUERADE_ADDRESS=$MASQUERADE_ADDRESS && /usr/sbin/proftpd -n -c {{proftpd_conf_path}}"'
+  tags:
+    - gonramp_proftp_config
+  #
+
 - name: restart supervisor proftpd
   supervisorctl:
     name: proftpd
