@@ -1,0 +1,26 @@
+---
+- name: Configure JBrowse
+  become: yes
+  script: "roles/gonramp/scripts/./jbrowse_config.sh -t {{ tool_dependency_dir }} -u {{ galaxy_user_name }} -n {{ nginx_conf_path }} -a {{apollo_install_location | default('/opt/Apollo')}}/web-app"
+  tags:
+    - jb_script
+
+- name: configure nginx to disable gzip with byte-range requests
+  blockinfile:
+    path: "{{ nginx_conf_path }}"
+    insertafter: 'location /_x_accel_redirect/'
+    marker: "          # {mark} gzip disable conditional"
+    block: |2
+                if ($http_range) {
+                  gzip off;
+                }
+  tags:
+    - nginx_byte_range_gzip_fix
+
+- name: update and restart supervisor nginx
+  become: yes
+  supervisorctl:
+    name: nginx
+    state: restarted
+  tags:
+    - jb_supervisor_restart
