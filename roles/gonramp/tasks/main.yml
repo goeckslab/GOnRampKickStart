@@ -9,7 +9,7 @@
   file:
     path: "{{extra_env_variables.handlers_and_web.GALAXY_SHARED_DIR}}"
     state: directory
-    mode: 0774
+    mode: 0775
   become: yes
   become_user: "{{galaxy_user_name}}"
   tags:
