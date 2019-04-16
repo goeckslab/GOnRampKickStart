@@ -99,11 +99,6 @@
         - install_galaxy
         - manage_postgres
 
-    # - role: miniconda-role
-    #   tags: conda
-    #   become: yes
-    #   become_user: "{{ galaxy_user_name }}"
-
     - role: galaxyprojectdotorg.galaxy
       become: yes
       become_user: "{{ galaxy_user_name }}"
@@ -149,12 +144,11 @@
       tags:
         - install_apollo
 
-  post_tasks:
-    - name: configure JBrowse
-      include: roles/gonramp/tasks/jbrowse.yml
+    - role: jbrowse_config
       tags:
         - config_jbrowse
 
+  post_tasks:
     - name: Clean apt cache to recover some disk space
       shell: apt-get clean
 
