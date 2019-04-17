@@ -1,0 +1,8 @@
+---
+- name: Modify postgresql conf to match supervisor pre_postgresql
+  lineinfile:
+    path: "{{ supervisor_postgres_config_path }}"
+    regexp: '^stats_temp_directory.*$'
+    line: "stats_temp_directory = '/var/run/postgresql'"
+  tags:
+    - modify_postgres_conf

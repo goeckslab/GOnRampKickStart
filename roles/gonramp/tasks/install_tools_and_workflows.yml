@@ -34,15 +34,6 @@
     mode: 0755
   when: addenda_check.stat.islnk is defined
 
-- name: ensure that port {{ paste_installer_port }} is open, wait up to 60 sec
-  wait_for:
-    port: "{{paste_installer_port}}"
-    delay: 5
-    timeout: 60
-
 - name: "Install Tools and Workflows (WARNING: LENGTHY PROCESS!)"
-  command: "/tmp/gonramp/./install_workflows.py -a 127.0.0.1:{{ paste_installer_port | default('80') }} -k {{ default_admin_api_key }} -wd /tmp/gonramp/workflows -t"
+  command: "/tmp/gonramp/./install_workflows.py -a 127.0.0.1 -k {{ default_admin_api_key }} -wd /tmp/gonramp/workflows -t"
   async: 9000 # wait 2.5 hours, polling every 10 seconds, tho likely sooner
-
-- import_tasks: zombiecheck.yml
-  become: yes

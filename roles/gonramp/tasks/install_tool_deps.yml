@@ -10,3 +10,17 @@
     - future
     - bcbio-gff
     - biopython
+
+- name: acquire libpng12
+  get_url:
+    url: http://security.ubuntu.com/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1.1_amd64.deb
+    dest: /tmp/libpng12-0_1.2.54-1ubuntu1.1_amd64.deb
+    checksum: md5:38fd39cd2f688be1f46f53f8f2c80711
+  tags:
+    - install_libpng12
+
+- name: install libpng12
+  become: yes
+  shell: dpkg -i /tmp/libpng12-0_1.2.54-1ubuntu1.1_amd64.deb
+  tags:
+    - install_libpng12

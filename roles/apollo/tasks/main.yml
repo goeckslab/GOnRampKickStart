@@ -1,16 +1,49 @@
 ---
 - name: re-setup for apollo
   setup:
-- name: set tomcat version to 7 for ubuntu 14.04
-  set_fact:
-    apt_tomcat_version: "tomcat7"
-  when: ansible_os_family == "Debian" and ansible_distribution == "Ubuntu" and ansible_distribution_version == "14.04"
-  tags: always
+
+# - name: set tomcat version to 7 for ubuntu 14.04
+#   set_fact:
+#     apt_tomcat_version: "tomcat7"
+#   when: ansible_os_family == "Debian" and ansible_distribution == "Ubuntu" and ansible_distribution_version == "14.04"
+#   tags: always
+
 - include: ubuntu_install.yml
   when: ansible_os_family == "Debian" and ansible_distribution == "Ubuntu"
   tags:
     - apollo_dependencies
     - ubuntu
+
+- name: configure nginx to redirect apollo requests
+  blockinfile:
+    path: "{{ nginx_conf_path }}"
+    insertafter: '        listen 80;'
+    marker: '        # {mark} Apollo & JBrowse segments'
+    block: |2
+              # JBrowse display application addendum
+              location /jbrowse {
+                root    /opt/Apollo/web-app/;
+              }
+
+              # Apollo rerouting
+              location /apollo/ {
+                proxy_pass http://127.0.0.1:8080/apollo/;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "upgrade";
+                proxy_set_header X-Forwarded-Host $host;
+                proxy_set_header X-Forwarded-Server $host;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              }
+  tags:
+    - nginx_conf_config
+
+- name: restart nginx
+  supervisorctl:
+    name: nginx
+    state: restarted
+  tags:
+    - apollo_restart_nginx
 
 - name: move D.Miranda files over
   copy:

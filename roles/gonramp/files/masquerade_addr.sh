@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-MASQUERADE_ADDRESS="$(cat /etc/network/interfaces | grep -v \"\#\" | grep address | cut -d' ' -f2-)"
+MASQUERADE_ADDRESS="$(ip a | grep 192 | sed 's/.*inet //' | sed 's|/24.*||')"
 
 if [ -z "$MASQUERADE_ADDRESS" ]; then
 	MASQUERADE_ADDRESS="$(curl -s icanhazip.com)"

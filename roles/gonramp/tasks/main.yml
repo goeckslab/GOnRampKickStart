@@ -6,12 +6,19 @@
     - always
 
 - name: create Galaxy / Apollo shared directory
-  file: path="{{extra_env_variables.handlers_and_web.GALAXY_SHARED_DIR}}" state=directory
+  file:
+    path: "{{extra_env_variables.handlers_and_web.GALAXY_SHARED_DIR}}"
+    state: directory
+    mode: 0775
   become: yes
   become_user: "{{galaxy_user_name}}"
-  mode: 0775
   tags:
     - make_shared_directory
+
+- name: configure postgresql.conf
+  include: postgresql.yml
+  tags:
+    - gonramp_postgres_config
 
 - name: execute supervisor configuration
   include: supervisor_envs.yml
@@ -30,15 +37,6 @@
 - include: install_tool_deps.yml
   tags:
     - install_external_tool_dependencies
-
-- include: add_paste_server.yml
-  tags:
-    - add_paste_server
-
-- include: start_paste_server.yml
-  tags:
-    - tools_and_workflows
-    - start_paste_server
 
 - include: intro_data_library.yml
   when: (default_admin_api_key is defined)
@@ -165,13 +163,8 @@
     - install_local_tools
     - install_conda_deps
 
-- include: stop_paste_server.yml
-  tags:
-    - tools_and_workflows
-    - stop_paste_server
-
 - include: glimmerhmm.yml
-  when: tool_dependency_dir and galaxy_config_default['app:main']['tool_data_table_config_path'] and galaxy_server_dir and (workflow_check.stdout == "yes")
+  when: tool_dependency_dir and tool_data_table_config_path and galaxy_server_dir and (workflow_check.stdout == "yes")
   tags:
     - tools_and_workflows
     - configure_glimmerhmm

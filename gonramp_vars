@@ -1,3 +1,15 @@
+galaxy_separate_privileges: yes
+
+# enforce postgres version
+postgresql_version: "{{ '9.3' if ansible_distribution=='Ubuntu'
+                                 and ansible_distribution_version | version_compare('15.04', '<=')
+                              else '10' if ansible_distribution=='Ubuntu'
+                                            and ansible_distribution_version | version_compare('18.04', '>=')
+                              else '9.5' if ansible_distribution=='Ubuntu'
+                                            and ansible_distribution_version | version_compare('16.04', '==')
+                              else '9.4' if ansible_distribution=='Debian'
+                                            and ansible_distribution_version | version_compare('8.0', '>=') }}"
+
 # create an administrative user
 galaxy_admin: admin@g-onramp.org
 galaxy_admin_pw: "!?admin?!"
@@ -10,12 +22,13 @@ generate_api_key: True
 
 configure_docker: no
 
-galaxy_changeset_id: release_18.05
+galaxy_changeset_id: release_19.01
 
 # disable supervisor webserver
 supervisor_webserver: False
 
 tool_dependency_dir: /home/{{ galaxy_user_name }}/tool_dependencies
+galaxy_tool_dependency_dir: "{{ tool_dependency_dir }}"
 whitelist_file: /home/{{ galaxy_user_name }}/galaxy/config/sanitize_whitelist.txt
 tool_data: /home/{{ galaxy_user_name }}/galaxy/tool-data
 tool_data_table_config_path: /home/{{ galaxy_user_name }}/galaxy/config/tool_data_table_conf.xml
@@ -34,7 +47,7 @@ direct_install_mm10: False
 # cvmfs
 galaxy_extras_config_cvmfs: True
 
-paste_installer_port: 8888
+# paste_installer_port: 8888
 local_tool_dir_name: "local_tools"
 gonramp_tools_repo: https://github.com/goeckslab/galaxy-tools.git
 gonramp_apollo_tools: ['create_or_update_organism', 'delete_organism', 'apollo_user_manager']
@@ -60,10 +73,12 @@ extra_env_variables:
 apollo_os_user: "apollo_sys"
 apollo_os_gid: 1337
 apollo_os_uid: "{{ apollo_os_gid }}"
-apollo_version: "jbrowse-1.15"
+apollo_version: "df779aad1fcdfac2a461488d92ab2c191e993c3a" #"jbrowse-1.15"
 
-jbrowse_tag: "cosmetic_changes"
-jbrowse_source: "https://github.com/luke-c-sargent/jbrowse"
+jbrowse_tag: "1.16.2-release"
+jbrowse_source: "https://github.com/GMOD/jbrowse"
+#jbrowse_tag: "cosmetic_changes"
+#jbrowse_source: "https://github.com/luke-c-sargent/jbrowse"
 
 # apollo admin user information
 apollo_admin_user: "{{galaxy_admin | default('apollo_admin')}}"

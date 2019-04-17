@@ -5,6 +5,18 @@
   tags:
     - jb_script
 
+- name: configure nginx to disable gzip with byte-range requests
+  blockinfile:
+    path: "{{ nginx_conf_path }}"
+    insertafter: 'location /_x_accel_redirect/'
+    marker: "          # {mark} gzip disable conditional"
+    block: |2
+                if ($http_range) {
+                  gzip off;
+                }
+  tags:
+    - nginx_byte_range_gzip_fix
+
 - name: update and restart supervisor nginx
   become: yes
   supervisorctl:
