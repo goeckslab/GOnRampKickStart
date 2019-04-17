@@ -2,7 +2,7 @@
 An Ansible-driven deployment script for [G-OnRamp](http://g-onramp.org), a [Galaxy](https://galaxyproject.org)-based platform that creates genome browsers for any eukaryotic genome, and allows their [collaborative annotation with Apollo](http://genomearchitect.github.io/). Adapted from [GalaxyKickStart](https://github.com/ARTBio/GalaxyKickStart).
 
 Requires:
-- [`ansible` version >= 2.2](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+- [`ansible` version >= 2.7](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 - [`git` version >= 2.11](https://git-scm.com/downloads)
 - a valid target (remote or local system, VM, container, ...)
 
@@ -13,7 +13,7 @@ Requires:
 4. [More info](#more-info)
 
 ## Configure `gonramp_inventory` file
-While [the file itself contains basic examples](https://github.com/goeckslab/GOnRampKickStart/blob/master/gonramp_inventory), more reading can be found in [Ansible's documentation](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html). The target system *must be running Ubuntu 16.04*.
+While [the file itself contains basic examples](https://github.com/goeckslab/GOnRampKickStart/blob/master/gonramp_inventory), more reading can be found in [Ansible's documentation](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html). *The target system must be running Ubuntu 18.04*.
 
 ## Run `kickstart.sh`
 From the terminal, execute:
