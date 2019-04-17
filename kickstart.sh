@@ -125,8 +125,6 @@ if [ "$MAJOR" -gt "$ANSIBLE_REQUIRED_MAJOR" ] || [ "$MAJOR" -eq "$ANSIBLE_REQUIR
 
     ansible-galaxy install -r requirements_roles.yml -p roles
 
-#    cp -Rf modified_roles/* roles/
-
   else
     echo "$PFX previous GalaxyKickStart installation found, resuming"
   fi
