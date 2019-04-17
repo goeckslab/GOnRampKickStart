@@ -39,4 +39,4 @@ WARNING! This will take some time (multiple hours)
 ```
 
 ## More info
-[Deployment options at our website under 'Getting Started with G-OnRamp'](http://gonramp.wustl.edu/#sow-editor-3)
+[Deployment options at our website under 'Get Started with G-OnRamp'](http://gonramp.wustl.edu/#sow-editor-3)
