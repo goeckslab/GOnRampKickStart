@@ -50,7 +50,7 @@
     - fail:
         msg: "ERROR: {{ ansible_distribution }} {{ ansible_distribution_version }} is not supported"
       when: (ansible_distribution != "Ubuntu") or
-            (ansible_distribution_version != "16.04" and ansible_distribution_version != "18.04")
+            (ansible_distribution_version != "16.04" and ansible_distribution_version < "18.04")
 
     - name: update apt
       apt:

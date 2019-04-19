@@ -199,6 +199,11 @@
   tags:
     - copy_favicons
 
+- name: Copy over welcome.html
+  template: src=gonramp_welcome.html.j2 dest="{{ galaxy_server_dir }}/static/welcome.html"
+  tags:
+    - copy_welcome_html
+
 - include: hostname_fix.yml
   tags:
     - hostname_fix

@@ -12,9 +12,9 @@
   tags:
     - ubuntu1604
 
-- name: perform Ubuntu 18.04 installation
+- name: perform Ubuntu >= 18.04 installation
   include: ubuntu1804.yml
   when:
-    - ansible_distribution_version == "18.04"
+    - ansible_distribution_version >= "18.04"
   tags:
     - ubuntu1804
