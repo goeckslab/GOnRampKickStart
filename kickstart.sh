@@ -109,7 +109,7 @@ if [ "$MAJOR" -gt "$ANSIBLE_REQUIRED_MAJOR" ] || [ "$MAJOR" -eq "$ANSIBLE_REQUIR
     echo $TRANSPORT_CFG_LINE >> ansible.cfg
     cd .. || exit
     rm -f temporino/galaxy.yml
-    rm -f temporino/.git
+    rm -rf temporino/.git
     
     # acquire workflows
     mkdir -p gonramp/workflows
@@ -118,7 +118,7 @@ if [ "$MAJOR" -gt "$ANSIBLE_REQUIRED_MAJOR" ] || [ "$MAJOR" -eq "$ANSIBLE_REQUIR
 
     mv requirements_roles.yml ./temporino/requirements_roles.yml
 
-    cp -R ./temporino/ .
+    cp -a ./temporino/. .
     rm -rf temporino
 
     mv gonramp_vars group_vars/gonramp
