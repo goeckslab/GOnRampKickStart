@@ -131,7 +131,7 @@ def install_tool(tool_info, revision_idx):
     install_res_deps = False if tool_info["name"] == "regtools_junctions_extract" \
                        else True
     res = TSC.install_repository_revision(
-        tool_shed_url="https://toolshed.g2.bx.psu.edu",
+        tool_shed_url="https://{}".format(tool_info["tool_shed_url"]) if "tool_shed_url" in tool_info else "https://toolshed.g2.bx.psu.edu",
         name=tool_info["name"],
         owner=tool_info["owner"],
         changeset_revision=tool_info["revisions"][revision_idx],

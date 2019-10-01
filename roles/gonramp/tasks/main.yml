@@ -208,6 +208,16 @@
   tags:
     - hostname_fix
 
+- name: enable test toolshed
+  copy:
+    src: files/tool_sheds_conf.xml
+    dest: /home/{{ galaxy_user_name }}/galaxy/config/tool_sheds_conf.xml
+    owner: galaxy
+    group: users
+    mode: 0644
+  tags:
+    - enable_test_tool_shed
+
 - name: restart all services
   become: yes
   shell: supervisorctl restart all
