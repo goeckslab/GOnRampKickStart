@@ -27,3 +27,9 @@ tools:
   - 56c31114ad4a
   tool_panel_section_label: G-OnRamp Tools
   tool_shed_url: toolshed.g2.bx.psu.edu
+- name: join
+  owner: devteam
+  revisions:
+  - a10f49d9218a
+  tool_panel_section_label: Operate on Genomic Intervals
+  tool_shed_url: toolshed.g2.bx.psu.edu
