@@ -27,7 +27,7 @@
   become: yes
   become_user: root
   git:
-    repo: https://github.com/gmod/Apollo.git
+    repo: "{{apollo_install_repo}}"
     dest: "{{apollo_install_location}}/"
     version: "{{apollo_version}}"
     force: yes

@@ -74,6 +74,7 @@ apollo_os_user: "apollo_sys"
 apollo_os_gid: 1337
 apollo_os_uid: "{{ apollo_os_gid }}"
 apollo_version: "757ac1dede4eccca1d9c9acd6b837efb08ec45c7"
+apollo_install_repo: "https://github.com/gmod/Apollo.git"
 
 jbrowse_tag: "1.16.6-release"
 jbrowse_source: "https://github.com/GMOD/jbrowse"
