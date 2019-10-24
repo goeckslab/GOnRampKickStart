@@ -33,3 +33,21 @@ tools:
   - a10f49d9218a
   tool_panel_section_label: Operate on Genomic Intervals
   tool_shed_url: toolshed.g2.bx.psu.edu
+- name: picard
+  owner: devteam
+  revisions:
+  - 7d34178f2812
+  tool_panel_section_label: Picard
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: featurecounts
+  owner: iuc
+  revisions:
+  - a37612abf7f9
+  tool_panel_section_label: RNA-seq
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: deseq2
+  owner: iuc
+  revisions:
+  - 0696db066a5b
+  tool_panel_section_label: RNA-seq
+  tool_shed_url: toolshed.g2.bx.psu.edu
