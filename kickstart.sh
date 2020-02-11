@@ -18,33 +18,39 @@ SHALLOW="--shallow-since=$SHALLOW_SINCE"
 
 function usage
 {
-  echo -e "\nUsage:"
-  echo -e "  $0 <optional arguments and flags>\n"
-  echo -e "Optional Arguments:"
-  echo -e "  -t \"comma,seperated,tags\""
-  echo -e "\t- tags to run, to the exclusion of all other tags"
-  echo -e "\t\t\tOR"
-  echo -e "  -s \"comma,seperated,tags\""
-  echo -e "\t- tags to skip, running all other tags"
-  echo -e "\t\tNOTE: the -t and -s options are mutually exclusive"
-  echo -e "  -v N"
-  echo -e "\t- verbosity of output, where N is an integer (1 2 3 or 4)"
-  echo -e "Optional Flags:"
-  echo -e "  -i"
-  echo -e "\tinstall gonrampkickstart only -- stops before running ansible\n"
-  echo -e "  -l"
-  echo -e "\tinstall locally without ssh"
+  printf "
+Usage:
+  %s <optional arguments and flags>
+
+Optional Arguments:
+  -t \"comma,seperated,tags\"
+\t- tags to run, to the exclusion of all other tags
+\t\t\tOR
+  -s \"comma,seperated,tags\"
+\t- tags to skip, running all other tags
+\t\tNOTE: the -t and -s options are mutually exclusive
+  -v N
+\t- verbosity of output, where N is an integer (1 2 3 or 4)
+Optional Flags:
+  -i
+\tinstall gonrampkickstart only -- stops before running ansible\n
+  -l
+\tinstall locally without ssh\n" "$0"
 }
 
 TAGSTRING=""
 INSTALL=1
-
+LOCAL=1
 
 while (( "$#" )); do
 
         case $1 in
           -i | --install_only )
             INSTALL=0
+            shift 1
+            ;;
+          -l | --local )
+            LOCAL=0
             shift 1
             ;;
           -h | --help )
@@ -146,10 +152,15 @@ if [ "$MAJOR" -gt "$ANSIBLE_REQUIRED_MAJOR" ] || [ "$MAJOR" -eq "$ANSIBLE_REQUIR
     exit
   fi
 
-  # install galaxy,
+  # install galaxy, g-onramp tools and workflows, apollo
   echo "$PFX Installing G-OnRamp ... "
   printf "${RED}WARNING!${NC} This will take some time (multiple hours)\n"
-  ansible-playbook -i ./gonramp_inventory gonramp.yml $TAGSTRING
+  if [[ $INSTALL -eq 0 ]]
+  then
+    ansible-playbook -i ./gonramp_inventory gonramp.yml $TAGSTRING
+  else
+    ansible-playbook -i ./gonramp_local_inventory gonramp.yml $TAGSTRING
+  fi
   R=$?
 
   if [[ $R -eq 0 ]]
