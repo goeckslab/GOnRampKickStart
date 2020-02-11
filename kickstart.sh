@@ -157,7 +157,7 @@ if [ "$MAJOR" -gt "$ANSIBLE_REQUIRED_MAJOR" ] || [ "$MAJOR" -eq "$ANSIBLE_REQUIR
   printf "${RED}WARNING!${NC} This will take some time (multiple hours)\n"
   if [[ $INSTALL -eq 0 ]]
   then
-    ansible-playbook -i ./gonramp_inventory gonramp.yml $TAGSTRING
+    ansible-playbook -i ./gonramp_inventory gonramp.yml $TAGSTRING --connection=local
   else
     ansible-playbook -i ./gonramp_local_inventory gonramp.yml $TAGSTRING
   fi
@@ -170,7 +170,7 @@ if [ "$MAJOR" -gt "$ANSIBLE_REQUIRED_MAJOR" ] || [ "$MAJOR" -eq "$ANSIBLE_REQUIR
     echo "G-OnRamp Installation failure"
   fi
 else
-  echo "$PFX ERROR: NO ANSIBLE FOUND WITH CORRECT VERSION ( >= 2.1)"
+  echo "$PFX ERROR: NO ANSIBLE FOUND WITH CORRECT VERSION ( >= $ANSIBLE_REQUIRED_MAJOR.$ANSIBLE_REQUIRED_MINOR)"
 fi
 
 if (( $SECONDS > 3600 )) ; then
