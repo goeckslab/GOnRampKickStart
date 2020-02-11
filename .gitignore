@@ -7,6 +7,7 @@
 !.gitignore
 !ansible.cfg
 !gonramp_inventory
+!gonramp_local_inventory
 !gonramp.yml
 !gonramp_vars
 !kickstart.sh

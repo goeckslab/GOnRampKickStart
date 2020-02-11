@@ -1,0 +1,16 @@
+# This is where you enter your hosts (target systems) and connection information
+# eg:
+#192.168.56.16 ansible_user="user" ansible_become_pass="sudo_pass" ansible_ssh_pass="ssh_pass"
+# in this case, an ansible connection requires:
+#	ansible_user: the user to connect to the remote host as
+#	ansible_become_pass: the sudo password, if required*
+#	ansible_ssh_pass: the ssh password for the ssh user*
+# the relevant variable for using an ssh key is:
+#	ansible_ssh_private_key_file: the path to your private ssh key*
+#	  *: storing credentials in plain-text is risky; for other options, see:
+# http://docs.ansible.com/ansible/playbooks_vault.html
+# http://docs.ansible.com/ansible/playbooks_variables.html#passing-variables-on-the-command-line
+
+# HOST ENTRIES MUST GO BELOW [gonramp] HEADING
+[gonramp]
+127.0.0.1 ansible_user="root"

@@ -1,4 +1,3 @@
-
 #!/usr/bin/env bash
 RED='\033[0;31m'
 NC='\033[0m'
@@ -19,15 +18,22 @@ SHALLOW="--shallow-since=$SHALLOW_SINCE"
 
 function usage
 {
-  echo "Usage:\n"
-  echo "  $0 -t \"comma,seperated,tags\""
-  echo "\t\t\tOR"
-  echo "  $0 -s \"comma,seperated,tags\""
-  echo "\t-t: tags to run, to the exclusion of all other tags"
-  echo "\t-s: tags to skip, running all other tags"
-  echo "\t\tnote: these options are mutually exclusive\n"
-  echo "\t- verbosity flag -v N where N=1..4 optional;\n\t\t - include before or after tag flags\n"
-  echo "\t -i: install gonrampkickstart only -- stops before running ansible\n"
+  echo -e "\nUsage:"
+  echo -e "  $0 <optional arguments and flags>\n"
+  echo -e "Optional Arguments:"
+  echo -e "  -t \"comma,seperated,tags\""
+  echo -e "\t- tags to run, to the exclusion of all other tags"
+  echo -e "\t\t\tOR"
+  echo -e "  -s \"comma,seperated,tags\""
+  echo -e "\t- tags to skip, running all other tags"
+  echo -e "\t\tNOTE: the -t and -s options are mutually exclusive"
+  echo -e "  -v N"
+  echo -e "\t- verbosity of output, where N is an integer (1 2 3 or 4)"
+  echo -e "Optional Flags:"
+  echo -e "  -i"
+  echo -e "\tinstall gonrampkickstart only -- stops before running ansible\n"
+  echo -e "  -l"
+  echo -e "\tinstall locally without ssh"
 }
 
 TAGSTRING=""
