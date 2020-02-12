@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-RED='\033[0;31m'
-NC='\033[0m'
+RED=$(tput setaf 1)
+NC=$(tput setaf 9)
 
 SECONDS=0
 
@@ -119,7 +119,7 @@ if [ "$MAJOR" -gt "$ANSIBLE_REQUIRED_MAJOR" ] || [ "$MAJOR" -eq "$ANSIBLE_REQUIR
     then
       TRANSPORT_CFG_LINE="transport = ssh"
     else
-      printf "${RED}WARNING!${$NC} Paramiko transport selected. If there are errors / port conflicts while running script (particularly when resetting proftpd in the galaxy.movedata role), consider installing sshpass so that ansible can use ssh transport.\n"
+      printf "${RED}WARNING!${NC} Paramiko transport selected. If there are errors / port conflicts while running script (particularly when resetting proftpd in the galaxy.movedata role), consider installing sshpass so that ansible can use ssh transport.\n"
     fi
     echo $TRANSPORT_CFG_LINE >> ansible.cfg
     cd .. || exit
@@ -157,7 +157,7 @@ if [ "$MAJOR" -gt "$ANSIBLE_REQUIRED_MAJOR" ] || [ "$MAJOR" -eq "$ANSIBLE_REQUIR
 
   # install galaxy, g-onramp tools and workflows, apollo
   echo "$PFX Installing G-OnRamp ... "
-  printf "${RED}WARNING${NC}! This will take some time (multiple hours)\n"
+  printf "${RED}WARNING${NC}: This will take some time (multiple hours)\n"
   if [[ $LOCAL -eq 0 ]]
   then
     ansible-playbook -i ./gonramp_local_inventory gonramp.yml $TAGSTRING --connection=local
