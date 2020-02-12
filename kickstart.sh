@@ -157,9 +157,9 @@ if [ "$MAJOR" -gt "$ANSIBLE_REQUIRED_MAJOR" ] || [ "$MAJOR" -eq "$ANSIBLE_REQUIR
   printf "${RED}WARNING!${NC} This will take some time (multiple hours)\n"
   if [[ $LOCAL -eq 0 ]]
   then
-    ansible-playbook -i ./gonramp_inventory gonramp.yml $TAGSTRING --connection=local
+    ansible-playbook -i ./gonramp_local_inventory gonramp.yml $TAGSTRING --connection=local
   else
-    ansible-playbook -i ./gonramp_local_inventory gonramp.yml $TAGSTRING
+    ansible-playbook -i ./gonramp_inventory gonramp.yml $TAGSTRING
   fi
   R=$?
 
