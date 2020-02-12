@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 RED=$(tput setaf 1)
-NC=$(tput setaf 9)
+NC=$(tput sgr0)
 
 SECONDS=0
 
