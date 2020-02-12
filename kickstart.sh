@@ -18,7 +18,7 @@ SHALLOW="--shallow-since=$SHALLOW_SINCE"
 
 # bash check
 if [ ! "$BASH_VERSION" ] ; then
-  printf "This script (%s) requires bash; please execute it directly:\n\t%s <options>" "$0" "$0" 1>&2
+  printf "${RED}ERROR${NC}: This script (%s) requires bash; please execute it directly:\n\t./%s <options>\n" "$0" "$0" 1>&2
   exit 1
 fi
 
