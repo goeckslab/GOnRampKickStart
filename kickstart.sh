@@ -16,8 +16,7 @@ SHALLOW_SINCE=2019-02-01
 
 SHALLOW="--shallow-since=$SHALLOW_SINCE"
 
-function usage
-{
+usage () {
   printf "
 Usage:
   %s <optional arguments and flags>
