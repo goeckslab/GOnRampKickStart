@@ -155,7 +155,7 @@ if [ "$MAJOR" -gt "$ANSIBLE_REQUIRED_MAJOR" ] || [ "$MAJOR" -eq "$ANSIBLE_REQUIR
   # install galaxy, g-onramp tools and workflows, apollo
   echo "$PFX Installing G-OnRamp ... "
   printf "${RED}WARNING!${NC} This will take some time (multiple hours)\n"
-  if [[ $INSTALL -eq 0 ]]
+  if [[ $LOCAL -eq 0 ]]
   then
     ansible-playbook -i ./gonramp_inventory gonramp.yml $TAGSTRING --connection=local
   else
