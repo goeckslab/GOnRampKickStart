@@ -13,4 +13,4 @@
 
 # HOST ENTRIES MUST GO BELOW [gonramp] HEADING
 [gonramp]
-127.0.0.1 ansible_user="root"
+127.0.0.1 ansible_user="root" ansible_become_pass="password"
