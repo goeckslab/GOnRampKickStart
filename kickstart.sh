@@ -16,6 +16,12 @@ SHALLOW_SINCE=2019-02-01
 
 SHALLOW="--shallow-since=$SHALLOW_SINCE"
 
+# bash check
+if [ ! "$BASH_VERSION" ] ; then
+  printf "This script (%s) requires bash; please execute it directly:\n\t%s <options>" "$0" "$0" 1>&2
+  exit 1
+fi
+
 usage () {
   printf "
 Usage:
@@ -42,50 +48,48 @@ INSTALL=1
 LOCAL=1
 
 while (( "$#" )); do
-
-        case $1 in
-          -i | --install_only )
-            INSTALL=0
-            shift 1
-            ;;
-          -l | --local )
-            LOCAL=0
-            shift 1
-            ;;
-          -h | --help )
-            usage
-            exit 0
-            ;;
-          -t | --tags )
-            TAGSTRING="--tags $2 "
-            shift 2
-            ;;
-          -s | --skip-tags )
-            TAGSTRING="--skip-tags $2 "
-            shift 2
-            ;;
-          -v | --version )
-            if ! [[ "$2" =~ ^[0-9]+$ ]]
-            then
-                    echo "ERROR: -v is not an integer"
-                    exit 1
-            elif [ "$2" -ge 1 ] && [ "$2" -le 4 ]
-            then
-                    vs=`printf '%*s' "$2" | tr ' ' "v"`
-                    TAGSTRING="-$vs "
-                    shift 2
-            else
-                    echo "ERROR: -v value $2 is not in range [1..4]"
-                    exit 1
-            fi
-            ;;
-          "" )
-          ;;
-          * )
-            usage
-            exit 1
-        esac
-
+  case $1 in
+    -i | --install_only )
+      INSTALL=0
+      shift 1
+      ;;
+    -l | --local )
+      LOCAL=0
+      shift 1
+      ;;
+    -h | --help )
+      usage
+      exit 0
+      ;;
+    -t | --tags )
+      TAGSTRING="--tags $2 "
+      shift 2
+      ;;
+    -s | --skip-tags )
+      TAGSTRING="--skip-tags $2 "
+      shift 2
+      ;;
+    -v | --version )
+      if ! [[ "$2" =~ ^[0-9]+$ ]]
+      then
+        echo "ERROR: -v is not an integer"
+        exit 1
+      elif [ "$2" -ge 1 ] && [ "$2" -le 4 ]
+      then
+        vs=`printf '%*s' "$2" | tr ' ' "v"`
+        TAGSTRING="-$vs "
+        shift 2
+      else
+        echo "ERROR: -v value $2 is not in range [1..4]"
+        exit 1
+      fi
+      ;;
+    "" )
+    ;;
+    * )
+      usage
+      exit 1
+  esac
 done
 
 # ensure correct version of ansible
