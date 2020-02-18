@@ -101,7 +101,7 @@ MAJOR="$(echo $ANSIBLE_VERSION | cut -d '.' -f 1)"
 MINOR="$(echo $ANSIBLE_VERSION | cut -d '.' -f 2)"
 
 if (( "$MAJOR" < "$ANSIBLE_REQUIRED_MAJOR" || "$MAJOR" == "$ANSIBLE_REQUIRED_MAJOR" && "$MINOR" < "$ANSIBLE_REQUIRED_MINOR" )) ; then
-  printf "insufficient ansible version (found $ANSIBLE_VERSION, require $ANSIBLE_REQUIRED_MAJOR.$ANSIBLE_REQUIRED_MINOR or later )\n"
+  printf "[${RED}ERROR${NC}: insufficient ansible version (found $ANSIBLE_VERSION, require $ANSIBLE_REQUIRED_MAJOR.$ANSIBLE_REQUIRED_MINOR or later )\n"
   printf "...please install latest ansible by:
   1. ensuring you have software-properties-common:
 \t$ sudo apt install software-properties-common
@@ -117,7 +117,7 @@ if (( "$MAJOR" < "$ANSIBLE_REQUIRED_MAJOR" || "$MAJOR" == "$ANSIBLE_REQUIRED_MAJ
   exit
 fi
 
-echo "$PFX Ansible $ANSIBLE_VERSION found, acquiring GalaxyKickStart.."
+echo "$PFX ansible $ANSIBLE_VERSION found, acquiring GalaxyKickStart.."
 
 if [ ! -d "./roles/galaxy.movedata" ]; then
 
