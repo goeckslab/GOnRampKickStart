@@ -117,80 +117,73 @@ if (( "$MAJOR" < "$ANSIBLE_REQUIRED_MAJOR" || "$MAJOR" == "$ANSIBLE_REQUIRED_MAJ
   exit
 fi
 
-if [ "$MAJOR" -gt "$ANSIBLE_REQUIRED_MAJOR" ] || [ "$MAJOR" -eq "$ANSIBLE_REQUIRED_MAJOR" ] && [ "$MINOR" -ge "$ANSIBLE_REQUIRED_MINOR" ] ; then
+echo "$PFX Ansible $ANSIBLE_VERSION found, acquiring GalaxyKickStart.."
 
-  echo "$PFX Ansible found, acquiring GalaxyKickStart.."
+if [ ! -d "./roles/galaxy.movedata" ]; then
 
+  # acquire GKS
+    # this requires a somewhat newer version of git (2.11+)
+  git clone $SHALLOW https://github.com/ARTbio/GalaxyKickStart.git temporino
+  cd temporino || exit
+  git reset --hard $GKS_SHA_PIN
 
-
-  if [ ! -d "./roles/galaxy.movedata" ]; then
-
-    # acquire GKS
-      # this requires a somewhat newer version of git (2.11+)
-    git clone $SHALLOW https://github.com/ARTbio/GalaxyKickStart.git temporino
-    cd temporino || exit
-    git reset --hard $GKS_SHA_PIN
-
-    # append line to ansible.cfg to force paramiko if sshpass absent
-    if sshpass -V 1>/dev/null 2>&1
-    then
-      TRANSPORT_CFG_LINE="transport = ssh"
-    else
-      printf "${RED}WARNING!${NC} Paramiko transport selected. If there are errors / port conflicts while running script (particularly when resetting proftpd in the galaxy.movedata role), consider installing sshpass so that ansible can use ssh transport.\n"
-    fi
-    echo $TRANSPORT_CFG_LINE >> ansible.cfg
-    cd .. || exit
-    rm -f temporino/galaxy.yml
-    rm -rf temporino/.git
-    
-    # acquire workflows
-    mkdir -p gonramp/workflows
-    git clone $WORKFLOWS --depth 1 roles/gonramp/workflows
-    rm -rf roles/gonramp/workflows/LICENSE
-
-    mv requirements_roles.yml ./temporino/requirements_roles.yml
-
-    cp -a ./temporino/. .
-    rm -rf temporino
-
-    mv gonramp_vars group_vars/gonramp
-
-    ansible-galaxy install -r requirements_roles.yml -p roles
-
-  else
-    echo "$PFX previous GalaxyKickStart installation found, resuming"
-  fi
-
-  export ANSIBLE_HOST_KEY_CHECKING=False
-  
-
-  if [[ $INSTALL -eq 0 ]]
+  # append line to ansible.cfg to force paramiko if sshpass absent
+  if sshpass -V 1>/dev/null 2>&1
   then
-    echo "gonrampkickstart initialized ... run:"
-    echo "   $ ansible-playbook -i gonramp_inventory gonramp.yml"
-    echo " ... to install g-onramp"
-    exit
-  fi
-
-  # install galaxy, g-onramp tools and workflows, apollo
-  echo "$PFX Installing G-OnRamp ... "
-  printf "${RED}WARNING${NC}: This will take some time (multiple hours)\n"
-  if [[ $LOCAL -eq 0 ]]
-  then
-    ansible-playbook -i ./gonramp_local_inventory gonramp.yml $TAGSTRING --connection=local
+    TRANSPORT_CFG_LINE="transport = ssh"
   else
-    ansible-playbook -i ./gonramp_inventory gonramp.yml $TAGSTRING
+    printf "${RED}WARNING!${NC} Paramiko transport selected. If there are errors / port conflicts while running script (particularly when resetting proftpd in the galaxy.movedata role), consider installing sshpass so that ansible can use ssh transport.\n"
   fi
-  R=$?
+  echo $TRANSPORT_CFG_LINE >> ansible.cfg
+  cd .. || exit
+  rm -f temporino/galaxy.yml
+  rm -rf temporino/.git
 
-  if [[ $R -eq 0 ]]
-  then
-    echo "$PFX G-OnRamp installation successful!"
-  else
-    echo "G-OnRamp Installation failure"
-  fi
+  # acquire workflows
+  mkdir -p gonramp/workflows
+  git clone $WORKFLOWS --depth 1 roles/gonramp/workflows
+  rm -rf roles/gonramp/workflows/LICENSE
+
+  mv requirements_roles.yml ./temporino/requirements_roles.yml
+
+  cp -a ./temporino/. .
+  rm -rf temporino
+
+  mv gonramp_vars group_vars/gonramp
+
+  ansible-galaxy install -r requirements_roles.yml -p roles
+
 else
-  echo "$PFX ERROR: NO ANSIBLE FOUND WITH CORRECT VERSION ( >= $ANSIBLE_REQUIRED_MAJOR.$ANSIBLE_REQUIRED_MINOR)"
+  echo "$PFX previous GalaxyKickStart installation found, resuming"
+fi
+
+export ANSIBLE_HOST_KEY_CHECKING=False
+
+
+if [[ $INSTALL -eq 0 ]]
+then
+  echo "gonrampkickstart initialized ... run:"
+  echo "   $ ansible-playbook -i gonramp_inventory gonramp.yml"
+  echo " ... to install g-onramp"
+  exit
+fi
+
+# install galaxy, g-onramp tools and workflows, apollo
+echo "$PFX Installing G-OnRamp ... "
+printf "${RED}WARNING${NC}: This will take some time (multiple hours)\n"
+if [[ $LOCAL -eq 0 ]]
+then
+  ansible-playbook -i ./gonramp_local_inventory gonramp.yml $TAGSTRING --connection=local
+else
+  ansible-playbook -i ./gonramp_inventory gonramp.yml $TAGSTRING
+fi
+R=$?
+
+if [[ $R -eq 0 ]]
+then
+  echo "$PFX G-OnRamp installation successful!"
+else
+  echo "G-OnRamp Installation failure"
 fi
 
 if (( $SECONDS > 3600 )) ; then
