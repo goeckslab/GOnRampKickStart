@@ -94,7 +94,7 @@ done
 
 # ensure correct version of ansible
 ANSIBLE_REQUIRED_MAJOR="2"
-ANSIBLE_REQUIRED_MINOR="10"
+ANSIBLE_REQUIRED_MINOR="7"
 
 ANSIBLE_VERSION=$(ansible --version | head -n 1 | cut -d " " -f 2)
 MAJOR="$(echo $ANSIBLE_VERSION | cut -d '.' -f 1)"
