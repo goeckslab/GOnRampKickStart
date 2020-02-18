@@ -110,7 +110,7 @@ if (( "$MAJOR" < "$ANSIBLE_REQUIRED_MAJOR" || "$MAJOR" == "$ANSIBLE_REQUIRED_MAJ
   3. download package information from all sources:
 \t$ sudo apt update
   4. upgrade or install ansible:
-\t$ sudo apt uprade ansible
+\t$ sudo apt upgrade ansible
   5. check for success:
 \t$ ansible --version
 "
