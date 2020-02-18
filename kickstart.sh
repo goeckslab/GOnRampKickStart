@@ -94,11 +94,28 @@ done
 
 # ensure correct version of ansible
 ANSIBLE_REQUIRED_MAJOR="2"
-ANSIBLE_REQUIRED_MINOR="5"
+ANSIBLE_REQUIRED_MINOR="10"
 
 ANSIBLE_VERSION=$(ansible --version | head -n 1 | cut -d " " -f 2)
 MAJOR="$(echo $ANSIBLE_VERSION | cut -d '.' -f 1)"
 MINOR="$(echo $ANSIBLE_VERSION | cut -d '.' -f 2)"
+
+if (( "$MAJOR" < "$ANSIBLE_REQUIRED_MAJOR" || "$MAJOR" == "$ANSIBLE_REQUIRED_MAJOR" && "$MINOR" < "$ANSIBLE_REQUIRED_MINOR" )) ; then
+  printf "insufficient ansible version (found $ANSIBLE_VERSION, require $ANSIBLE_REQUIRED_MAJOR.$ANSIBLE_REQUIRED_MINOR or later )\n"
+  printf "...please install latest ansible by:
+  1. ensuring you have software-properties-common:
+\t$ sudo apt install software-properties-common
+  2. adding the ansible repository:
+\t$ sudo apt-add-repository --yes --update ppa:ansible/ansible
+  3. download package information from all sources:
+\t$ sudo apt update
+  4. upgrade or install ansible:
+\t$ sudo apt uprade ansible
+  5. check for success:
+\t$ ansible --version
+"
+  exit
+fi
 
 if [ "$MAJOR" -gt "$ANSIBLE_REQUIRED_MAJOR" ] || [ "$MAJOR" -eq "$ANSIBLE_REQUIRED_MAJOR" ] && [ "$MINOR" -ge "$ANSIBLE_REQUIRED_MINOR" ] ; then
 
