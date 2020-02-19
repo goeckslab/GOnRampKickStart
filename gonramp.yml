@@ -21,7 +21,9 @@
       tags: always
 
     - name: generate new API key
-      raw: "export LC_ALL=C ; cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 32 | head -n 1"
+      shell: "export LC_ALL=C ; cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 32 | head -n 1"
+      args:
+        executable: /bin/bash
       register: new_api_key
       when: generate_api_key
       tags:
