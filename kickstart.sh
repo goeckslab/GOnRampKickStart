@@ -6,7 +6,8 @@ SECONDS=0
 
 PFX="[G-OnRamp]"
 
-TRANSPORT_CFG_LINE="transport = paramiko"
+### provisional removal: seems to be causing issues
+# TRANSPORT_CFG_LINE="transport = paramiko"
 
 WORKFLOWS=https://github.com/goeckslab/G-OnRamp-workflows
 EXTRACT_DIR=G-OnRamp-workflows-master
@@ -39,8 +40,9 @@ Optional Arguments:
 Optional Flags:
   -i
 \tinstall gonrampkickstart only -- stops before running ansible\n
+EXPERIMENTAL FLAG, NOT READY FOR USE:
   -l
-\tinstall locally without ssh\n" "$0"
+\tinstall locally without ssh - IN DEVELOPMENT USE AT YOUR OWN RISK\n" "$0"
 }
 
 TAGSTRING=""
@@ -129,14 +131,15 @@ if [ ! -d "./roles/galaxy.movedata" ]; then
   cd temporino || exit
   git reset --hard $GKS_SHA_PIN
 
-  # append line to ansible.cfg to force paramiko if sshpass absent
-  if sshpass -V 1>/dev/null 2>&1
-  then
-    TRANSPORT_CFG_LINE="transport = ssh"
-  else
-    printf "${RED}WARNING!${NC} Paramiko transport selected. If there are errors / port conflicts while running script (particularly when resetting proftpd in the galaxy.movedata role), consider installing sshpass so that ansible can use ssh transport.\n"
-  fi
-  echo $TRANSPORT_CFG_LINE >> ansible.cfg
+##### turns out this doesn't seem super useful, and is causing hangs elsewhere 
+#  # append line to ansible.cfg to force paramiko if sshpass absent
+#  if sshpass -V 1>/dev/null 2>&1
+#  then
+#    TRANSPORT_CFG_LINE="transport = ssh"
+#  else
+#    printf "${RED}WARNING!${NC} Paramiko transport selected. If there are errors / port conflicts while running script (particularly when resetting proftpd in the galaxy.movedata role), consider installing sshpass so that ansible can use ssh transport.\n"
+#  fi
+#  echo $TRANSPORT_CFG_LINE >> ansible.cfg
   cd .. || exit
   rm -f temporino/galaxy.yml
   rm -rf temporino/.git
@@ -175,6 +178,7 @@ echo "$PFX Installing G-OnRamp ... "
 printf "${RED}WARNING${NC}: This will take some time (multiple hours)\n"
 if [[ $LOCAL -eq 0 ]]
 then
+  printf "${RED}WARNING${NC}: You have selected local installation -- this is experimental\n"
   ansible-playbook -i ./gonramp_local_inventory gonramp.yml $TAGSTRING --connection=local
 else
   ansible-playbook -i ./gonramp_inventory gonramp.yml $TAGSTRING
