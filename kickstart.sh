@@ -6,8 +6,8 @@ SECONDS=0
 
 PFX="[G-OnRamp]"
 
-### provisional removal: seems to be causing issues
-# TRANSPORT_CFG_LINE="transport = paramiko"
+
+TRANSPORT_CFG_LINE="transport = paramiko"
 
 WORKFLOWS=https://github.com/goeckslab/G-OnRamp-workflows
 EXTRACT_DIR=G-OnRamp-workflows-master
@@ -131,15 +131,15 @@ if [ ! -d "./roles/galaxy.movedata" ]; then
   cd temporino || exit
   git reset --hard $GKS_SHA_PIN
 
-##### turns out this doesn't seem super useful, and is causing hangs elsewhere 
-#  # append line to ansible.cfg to force paramiko if sshpass absent
-#  if sshpass -V 1>/dev/null 2>&1
-#  then
-#    TRANSPORT_CFG_LINE="transport = ssh"
-#  else
-#    printf "${RED}WARNING!${NC} Paramiko transport selected. If there are errors / port conflicts while running script (particularly when resetting proftpd in the galaxy.movedata role), consider installing sshpass so that ansible can use ssh transport.\n"
-#  fi
-#  echo $TRANSPORT_CFG_LINE >> ansible.cfg
+
+  # append line to ansible.cfg to force paramiko if sshpass absent
+  if sshpass -V 1>/dev/null 2>&1
+  then
+    TRANSPORT_CFG_LINE="transport = ssh"
+  else
+    printf "${RED}WARNING!${NC} Paramiko transport selected. If there are errors / port conflicts while running script (particularly when resetting proftpd in the galaxy.movedata role), consider installing sshpass so that ansible can use ssh transport.\n"
+  fi
+  echo $TRANSPORT_CFG_LINE >> ansible.cfg
   cd .. || exit
   rm -f temporino/galaxy.yml
   rm -rf temporino/.git
